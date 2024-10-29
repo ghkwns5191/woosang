@@ -30,6 +30,16 @@ public class HomeController {
 	@Autowired
 	private HomeService homeService;
 
+	/*
+	 * 구조도
+	 * 1. 로그인 / 회원가입
+	 * 2. 개인 이력 정보 입력 및 조회
+	 * 3. 채용담당자 로그인 시 조회 
+	 * -- 일단 여기까지 구현하고 미팅 후 추가 개발
+	 * -- ui 는 일단 bootstrap 으로 기본 구현 후 상세 디자인은 추후 적용할 예정.
+	 * (우선 개발 모듈 확인이 우선)
+	 */
+
 	@RequestMapping("/")
 	public String main(HttpServletRequest request, HttpServletResponse response, Model model) {
 		HttpSession session = request.getSession();
