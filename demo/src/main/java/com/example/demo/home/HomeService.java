@@ -228,6 +228,6 @@ public class HomeService {
 
 		sqlSession.delete(NAMESPACE + "deleteBasicInfo", basicInfo);
 		sqlSession.delete(NAMESPACE + "deleteCareerList", basicInfo);
-		sqlSession.delete(NAMESPACE + "deleteAcademicList", basicInfo);
+		sqlSession.delete(NAMESPACE + "deleteAcademicList", basicInfo); 
 	}
 }
