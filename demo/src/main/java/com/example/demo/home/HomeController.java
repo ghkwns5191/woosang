@@ -103,6 +103,26 @@ public class HomeController {
 	* 성공 시 홈 화면으로 이동.
 	*/
 
+	// 이력서 조회 화면으로 이동.
+	@RequestMapping(value="/resumelist", method=RequestMethod.GET)
+	public String getResumeListByUser(HttpServletRequest request
+									, HttpServletResponse response
+									, @RequestBody Map<String, Object> loginInfo){
+		List<Map<String, Object>> resumeList = this.homeService.getResumeListByUser(loginInfo);								
+		model.addAttribute("resumeList", resumeList);
+		
+		return "이력서 목록 조회 화면";
+	}
 
-	// 
+	// 이력서 상세 조회 화면으로 이동.
+	@RequestMapping(value="/resumeInfo", method=RequestMethod.GET)
+	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
+								, @RequestBody Map<String, Object> resumeInfo) {
+		
+		resumeInfo = this.homeService.getResumeInfo(resumeInfo);
+		model.addAttribute("resumeInfo", resumeInfo);
+
+
+		return "이력서 상세 조회 화면";
+	}
 }

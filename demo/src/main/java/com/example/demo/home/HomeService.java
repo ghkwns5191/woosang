@@ -28,14 +28,7 @@ public class HomeService {
 	@Autowired
 	SqlSession sql;
 	
-	
-	
 	private static final String NAMESPACE = "mapper.";
-	
-	public Map<String, Object> getDialogs() {
-		return sql.selectOne(NAMESPACE + "getDialogs");
-	}
-	
 	
 	
 	/*
@@ -137,6 +130,38 @@ public class HomeService {
 		result.put("joinFlag", joinFlag);
 		
 		
+		return result;
+	}
+
+
+
+	// 화면에 이력서 리스트를 뿌림.
+	public List<Map<String, Object>> getResumeListByUser(Map<String, Object> loginInfo) {
+
+		// 사용자 이름을 이용해 uuid 를 찾아서 해당 값을 기준으로 이력서 정보를 load. (쿼리문으로 바로 처리 가능. parameter 는 username)
+		return sqlSession.selectList(NAMESPACE + "getResumeListByUser", loginInfo);
+	}
+
+
+	// 화면에 이력서 정보를 뿌림.
+	public Map<String, Object> getResumeInfo(Map<String, Object> resumeInfo) {
+		Map<String, Object> result = new HashMap<>();
+
+
+		// 기본정보
+		Map<String, Object> basicInfo = sqlSession.selectOne(NAMESPACE + "getBasicInfo", resumeInfo);
+
+		// 경력정보 
+		List<Map<String, Object>> careerList = sqlSession.selectList(NAMESPACE + "getCareerList", resumeInfo);
+
+		// 학력 정보
+		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
+
+
+		result.put("basicInfo", basicInfo);
+		result.put("careerList", careerList);
+		result.put("academicList", academicList);
+
 		return result;
 	}
 }
