@@ -125,4 +125,30 @@ public class HomeController {
 
 		return "이력서 상세 조회 화면";
 	}
+
+
+
+	@RequestMapping(value="/inputResume", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> inputResume(@RequestBody Map<String, Object> inputParams) {
+		this.homeService.inputResume(inputParams);
+
+		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+	}
+	
+
+	@RequestMapping(value="/updateResume", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> updateResume(@RequestBody Map<String, Object> updateParams) {
+		this.homeService.updateResume(updateParams);
+
+		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+	}
+
+
+	@RequestMapping(value="/deleteResume", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteResume(@RequestBody Map<String, Object> deleteParams) {
+		this.homeService.deleteResume(deleteParams);
+
+		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+	}
+	
 }

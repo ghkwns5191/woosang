@@ -164,4 +164,70 @@ public class HomeService {
 
 		return result;
 	}
+
+	// 이력서 정보 신규 등록.
+	public void inputResume(Map<String, Object> inputParams) {
+		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
+		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
+		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
+
+
+
+		// 이력서 기본정보(header)
+		String id = UUID.randomUUID().toString();
+		basicInfo.put("id", id);
+		sqlSession.insert(NAMESPACE + "insertBasicInfo", basicInfo);
+
+		// 경력사항 저장
+		for (Map<String, Object> data : careerList) {
+			String careerId = UUID.randomUUID().toString();
+			data.put("resume_id", id);
+			data.put("id", career_id);
+
+			sqlSession.insert(NAMESPACE + "insertCareerInfo", data);
+		}
+
+		// 학력사항 저장
+		for (Map<String, Object> data : academicList) {
+			String academicId = UUID.randomUUID().toString();
+			data.put("resume_id", id);
+			data.put("id", academicId);
+
+			sqlSession.insert(NAMESPACE + "insertAcademicInfo", data);
+		}
+
+	}
+
+
+
+
+
+	// 이력서 정보 수정 -- 기존 리크루팅 페이지 로직 참고하여 수정 필요..
+	public void updateResume(Map<String, Object> updateParams) {
+		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
+		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
+		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
+		// 기본정보
+		sqlSession.update(NAMESPACE + "updateBasicInfo", basicInfo);
+		// 경력정보
+		for (Map<String, Object> data : careerList) {
+			sqlSession.update(NAMESPACE + "updateCareerInfo", data);
+		}
+		// 학력정보
+		for (Map<String, Object> data : academicList) {
+			sqlSession.update(NAMESPACE + "updateAcademicInfo", data);
+		}
+	}
+
+
+
+
+	// 이력서 정보 삭제
+	public void deleteResume(Map<String, Object> deleteParams) {
+		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
+
+		sqlSession.delete(NAMESPACE + "deleteBasicInfo", basicInfo);
+		sqlSession.delete(NAMESPACE + "deleteCareerList", basicInfo);
+		sqlSession.delete(NAMESPACE + "deleteAcademicList", basicInfo);
+	}
 }
