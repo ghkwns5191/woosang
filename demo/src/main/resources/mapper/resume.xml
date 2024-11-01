@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="resume">
+
+	<select id="getResumeListByUser" resultType="map">
+	/* resume.getResumeListByUser : 접속자의 이력서 list 조회 */
+	<!-- 이력서 테이블은 사용자 id 를 포함하므로 접속자의 id 를 갖는 모든 이력서를 가져오면 됨. (subquery 사용) -->
+
+	</select>
+
+
+	<select id="getBasicInfo" resultType="map">
+	/* resume.getBasicInfo : 선택한 이력서의 상세 내용 중 기본정보를 표기 */
+	<!-- 이력서 id 값에 따른 데이터 select -->
+
+	</select>
+
+
+	<select id="getCareerList" resultType="map">
+	/* resume.getCareerList : 해당 이력서 header 값에 해당하는 모든 경력사항을 불러옴. */
+	<!-- 이력서 id 값은 이미 경력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
+
+	</select>
+
+
+	<select id="getAcademicList" resultType="map">
+	/* resume.getAcademicList : 해당 이력서 header 값에 해당하는 모든 학력사항을 불러옴. */
+	<!-- 이력서 id 값은 이미 학력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
+
+	</select>
+
+
+	<select id="getCareerListCnt" resultType="int">
+	/* resume.getCareerListCnt : 해당 이력서 header 값에 해당하는 모든 경력사항을 count. */
+	<!-- 이력서 id 값은 이미 경력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
+
+	</select>
+
+
+	<select id="getAcademicListCnt" resultType="int">
+	/* resume.getAcademicListCnt : 해당 이력서 header 값에 해당하는 모든 학력사항을 count. */
+	<!-- 이력서 id 값은 이미 학력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
+
+	</select>
+
+
+	<insert id="insertBasicInfo">
+	/* resume.insertBasicInfo : 이력서 기본정보를 insert */
+
+
+	</insert>
+
+
+	<insert id="insertCareerInfo">
+	/* resume.insertCareerInfo : 이력서 경력정보를 insert */
+
+
+	</insert>
+
+
+	<insert id="insertAcademicInfo">
+	/* resume.insertAcademicInfo : 이력서 학력정보를 insert */
+
+
+	</insert>
+
+
+	<update id="updateBasicInfo">
+	/* resume.updateBasicInfo : 이력서 기본정보를 update */
+
+
+	</update>
+
+
+	<update id="updateCareerInfo">
+	/* resume.updateCareerInfo : 이력서 경력정보를 update */
+
+
+	</update>
+
+
+	<update id="updateAcademicInfo">
+	/* resume.updateAcademicInfo : 이력서 학력정보를 update */
+
+
+	</update>
+
+
+	<delete id="deleteBasicInfo">
+	/* resume.deleteBasicInfo : 이력서 기본정보를 delete */
+
+
+	</delete>
+
+
+	<delete id="deleteCareerList">
+	/* resume.deleteCareerList : 이력서 경력정보 목록을 delete */
+
+
+	</delete>
+
+
+	<delete id="deleteAcademicList">
+	/* resume.deleteAcademicList : 이력서 학력정보 목록을 delete */
+
+
+	</delete>
+
+
+	<delete id="deleteCareerInfo">
+	/* resume.deleteCareerList : 이력서 경력정보를 delete */
+
+
+	</delete>
+
+
+	<delete id="deleteAcademicInfo">
+	/* resume.deleteCareerList : 이력서 학력정보를 delete */
+
+
+	</delete>
+
+
+</mapper>
