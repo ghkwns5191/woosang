@@ -51,6 +51,21 @@ public class HomeController {
 	* insert 후 로그인 화면으로 이동 처리
 	*/
 
+	/* 
+	* 사용자 테이블 필드 정리
+	*	ID
+	*	, USERNAME
+	*	, PASSWORD
+	*	, FIRST_NAME
+	*	, MIDDLE_NAME
+	*	, LAST_NAME
+	*	, PHONE
+	*	, EMAIL
+	*	, NATIONALITY
+	*	, REGDATE
+	*	, ROLE_V
+	*/
+
 	// 회원가입 화면으로 이동.
 	@ReqeustMapping(value="/join", method=RequestMethod.GET)
 	public String join(HttpServletRequest request

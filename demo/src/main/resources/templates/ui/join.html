@@ -8,28 +8,20 @@
 </head>
 
 <body>
-<div>
-	
-        <div class="container">
-        <label><b>사용자 이름 입력</b></label>
-       <!--  <label th:text="${sessionVal}"><b></b></label> -->
-        <input id="nameon" placeholder="이름"></input>
-            <div class="col-6">
-            	<br>
-                <label><b>채팅입력</b></label>
-            </div>
-            <div>
-                <div id="msgArea" class="col"></div>
-                <div class="col-6">
-                    <div class="input-group mb-3">
-                        <input type="text" id="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="button-send" on-click="send()" on-enter="send()">전송</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        
-        <input type="hidden" id="sessionVal" th:value=${sessionVal} />
-</div>
+    <div class="container">
+        <table class="table">
+            <tr>
+                <td>1</td>
+                <td><input type="text" class="form-control"/></td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+        </table>
+    </div>
 <script src="../../js/chat.js"></script>
