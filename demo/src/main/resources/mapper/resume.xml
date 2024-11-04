@@ -45,7 +45,7 @@
 		, COUNTRY
 		, CITY
 		, JOB_DUTY
-		, POSITION
+		, POSI
 		, REG_DATE
 		, MOD_DATE
 	FROM CAREER
@@ -130,7 +130,7 @@
 		, COUNTRY
 		, CITY
 		, JOB_DUTY
-		, POSITION
+		, POSI
 		, REG_DATE
 	)
 	VALUES
@@ -142,7 +142,7 @@
 		, #{country}
 		, #{city}
 		, #{job_duty}
-		, #{position}
+		, #{posi}
 		, SYSDATE()
 	)
 	</insert>
@@ -202,7 +202,7 @@
 		, COUNTRY = #{country}
 		, CITY = #{city}
 		, JOB_DUTY = #{job_duty}
-		, POSITION = #{position}
+		, POSI = #{posi}
 		, MOD_DATE = SYSDATE()
 	WHERE ID = #{id}
 	AND RESUME_ID = #{resume_id}

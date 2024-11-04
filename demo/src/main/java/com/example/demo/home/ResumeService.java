@@ -26,7 +26,7 @@ public class ResumeService {
 	private static final Logger log = LoggerFactory.getLogger(ResumeService.class);
 	
 	@Autowired
-	SqlSession sql;
+	SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "resume.";
 	
@@ -78,7 +78,7 @@ public class ResumeService {
 		for (Map<String, Object> data : careerList) {
 			String careerId = UUID.randomUUID().toString();
 			data.put("resume_id", id);
-			data.put("id", career_id);
+			data.put("id", careerId);
 
 			sqlSession.insert(NAMESPACE + "insertCareerInfo", data);
 		}
@@ -103,9 +103,9 @@ public class ResumeService {
 	* list 데이터에 한하여 기존 데이터 size 와 입력 데이터 size 가 다를 수 있는 경우에 대비해야 함.
 	*/
 	public void updateResume(Map<String, Object> updateParams) {
-		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
-		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
-		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
+		Map<String, Object> basicInfo = (Map<String, Object>) updateParams.get("basicInfo");
+		List<Map<String, Object>> careerList = (List<Map<String, Object>>) updateParams.get("careerList");
+		List<Map<String, Object>> academicList = (List<Map<String, Object>>) updateParams.get("academicList");
 
 		List<Map<String, Object>> old_careerList = sqlSession.selectList(NAMESPACE + "getCareerList", basicInfo);
 		List<Map<String, Object>> old_academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", basicInfo);
@@ -206,7 +206,7 @@ public class ResumeService {
 
 	// 이력서 정보 삭제
 	public void deleteResume(Map<String, Object> deleteParams) {
-		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
+		Map<String, Object> basicInfo = (Map<String, Object>) deleteParams.get("basicInfo");
 
 		sqlSession.delete(NAMESPACE + "deleteBasicInfo", basicInfo);
 		sqlSession.delete(NAMESPACE + "deleteCareerList", basicInfo);

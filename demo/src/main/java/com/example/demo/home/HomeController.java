@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-＠RequestMapping(value = {"", "/"})
+@RequestMapping(value = {"", "/"})
 public class HomeController {
 	
 	private static final Logger log = LoggerFactory.getLogger(HomeController.class);
@@ -67,7 +67,7 @@ public class HomeController {
 	*/
 
 	// 회원가입 화면으로 이동.
-	@ReqeustMapping(value="/join", method=RequestMethod.GET)
+	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(HttpServletRequest request
 						, HttpServletResponse response) {
 
@@ -75,7 +75,7 @@ public class HomeController {
 	}
 	
 	// 실제 회원가입 로직 호출.
-	@ReqeustMapping(value="/join", method=RequestMethod.POST)
+	@RequestMapping(value="/join", method=RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> join(HttpServletRequest request
 						, HttpServletResponse response
 						, @RequestBody Map<String, Object> joinInfo) {
@@ -99,7 +99,7 @@ public class HomeController {
 
 	// 로그인 화면에서 로그인 진행.
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<Map<String, Object> login(HttpServletRequest request
+	public ResponseEntity<Map<String, Object>> login(HttpServletRequest request
 						, HttpServletResponse response
 						, @RequestBody Map<String, Object> loginInfo) {
 

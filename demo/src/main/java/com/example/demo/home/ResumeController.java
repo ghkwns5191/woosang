@@ -1,6 +1,8 @@
 package com.example.demo.home;
 
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,15 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.demo.utils.Util;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 @Controller
-＠RequestMapping(value = "/resume")
+@RequestMapping(value = "/resume")
 public class ResumeController {
 	
 	private static final Logger log = LoggerFactory.getLogger(ResumeController.class);
@@ -100,7 +98,8 @@ public class ResumeController {
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
-									, @RequestBody Map<String, Object> loginInfo){
+									, @RequestBody Map<String, Object> loginInfo
+									, Model model){
 		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(loginInfo);								
 		model.addAttribute("resumeList", resumeList);
 		
@@ -110,7 +109,8 @@ public class ResumeController {
 	// 이력서 상세 조회 화면으로 이동.
 	@RequestMapping(value="/detail", method=RequestMethod.GET)
 	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
-								, @RequestBody Map<String, Object> resumeInfo) {
+								, @RequestBody Map<String, Object> resumeInfo
+								, Model model) {
 		
 		resumeInfo = this.resumeService.getResumeInfo(resumeInfo);
 		model.addAttribute("resumeInfo", resumeInfo);
