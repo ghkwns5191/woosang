@@ -62,7 +62,7 @@ public class HomeController {
 	*	, PHONE
 	*	, EMAIL
 	*	, NATIONALITY
-	*	, REGDATE
+	*	, REG_DATE
 	*	, ROLE_V
 	*/
 
@@ -76,13 +76,11 @@ public class HomeController {
 	
 	// 실제 회원가입 로직 호출.
 	@ReqeustMapping(value="/join", method=RequestMethod.POST)
-	public ResponseEntity join(HttpServletRequest request
+	public ResponseEntity<Map<String, Object>> join(HttpServletRequest request
 						, HttpServletResponse response
 						, @RequestBody Map<String, Object> joinInfo) {
-		
-
 		Map<String, Object> result = this.homeService.join(request, response, joinInfo);
-		return "회원가입 페이지";
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	/*
@@ -96,8 +94,6 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request
 						, HttpServletResponse response) {
-
-		
 		return "로그인 화면";
 	}
 

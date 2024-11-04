@@ -21,6 +21,9 @@
 		ID
 		, USERNAME
 		, PASSWORD
+		, FIRST_NAME
+		, MIDDLE_NAME
+		, LAST_NAME
 		, PHONE
 		, EMAIL
 		, NATIONALITY
@@ -31,6 +34,9 @@
 		#{id}
 		, #{username}
 		, #{password}
+		, #{first_name}
+		, #{middle_name}
+		, #{last_name}
 		, #{phone}
 		, #{email}
 		, #{nationality}
