@@ -11,8 +11,8 @@
 	SELECT
 		ID
 		, TITLE
-		, REGDATE
-		, MODDATE
+		, REG_DATE
+		, MOD_DATE
 	FROM RESUME
 	WHERE USR_ID = {usr_id}
 	</select>
@@ -26,6 +26,8 @@
 		, TITLE
 		, SUMMARY
 		, REMARK
+		, REG_DATE
+		, MOD_DATE
 	FROM RESUME
 	WHERE ID = #{id}
 	</select>
@@ -44,8 +46,8 @@
 		, CITY
 		, JOB_DUTY
 		, POSITION
-		, REGDATE
-		, MODDATE
+		, REG_DATE
+		, MOD_DATE
 	FROM CAREER
 	WHERE RESUME_ID = #{resume_id}
 	</select>
@@ -54,98 +56,211 @@
 	<select id="getAcademicList" resultType="map">
 	/* resume.getAcademicList : 해당 이력서 header 값에 해당하는 모든 학력사항을 불러옴. */
 	<!-- 이력서 id 값은 이미 학력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
-
+	SELECT
+		ID
+		, RESUME_ID
+		, START_DATE
+		, END_DATE
+		, STILL_YN
+		, SCHOOL_NAME
+		, COUNTRY
+		, CITY
+		, MAJOR
+		, GRADE
+		, REG_DATE
+		, MOD_DATE
+	FROM ACADEMIC
+	WHERE RESUME_ID = #{resume_id}
 	</select>
 
 
 	<select id="getCareerListCnt" resultType="int">
 	/* resume.getCareerListCnt : 해당 이력서 header 값에 해당하는 모든 경력사항을 count. */
 	<!-- 이력서 id 값은 이미 경력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
-
+	SELECT
+		COUNT(*)
+	FROM CAREER
+	WHERE RESUME_ID = #{resume_id}
 	</select>
 
 
 	<select id="getAcademicListCnt" resultType="int">
 	/* resume.getAcademicListCnt : 해당 이력서 header 값에 해당하는 모든 학력사항을 count. */
 	<!-- 이력서 id 값은 이미 학력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
-
+	SELECT
+		COUNT(*)
+	FROM ACADEMIC
+	WHERE RESUME_ID = #{resume_id}
 	</select>
 
 
 	<insert id="insertBasicInfo">
 	/* resume.insertBasicInfo : 이력서 기본정보를 insert */
-
+	INSERT INTO RESUME
+	(
+		ID
+		, USR_ID
+		, TITLE
+		, SUMMARY
+		, REMARK
+		, REG_DATE
+	) 
+	VALUES 
+	(
+		#{id}
+		, #{usr_id}
+		, #{title}
+		, #{summary}
+		, #{remark}
+		, SYSDATE()
+	)
 
 	</insert>
 
 
 	<insert id="insertCareerInfo">
 	/* resume.insertCareerInfo : 이력서 경력정보를 insert */
-
-
+	INSERT INTO CAREER
+	(
+		ID
+		, RESUME_ID
+		, START_DATE
+		, END_DATE
+		, COMPANY_NAME
+		, COUNTRY
+		, CITY
+		, JOB_DUTY
+		, POSITION
+		, REG_DATE
+	)
+	VALUES
+	(	
+		#{id}
+		, #{start_date}
+		, #{end_date}
+		, #{company_name}
+		, #{country}
+		, #{city}
+		, #{job_duty}
+		, #{position}
+		, SYSDATE()
+	)
 	</insert>
 
 
 	<insert id="insertAcademicInfo">
 	/* resume.insertAcademicInfo : 이력서 학력정보를 insert */
-
-
+	INSERT INTO ACADEMIC
+	(
+		ID
+		, RESUME_ID
+		, START_DATE
+		, END_DATE
+		, STILL_YN
+		, SCHOOL_NAME
+		, COUNTRY
+		, CITY
+		, MAJOR
+		, GRADE
+		, REG_DATE
+	)
+	VALUES
+	(
+		#{id}
+		, #{resume_id}
+		, #{start_date}
+		, #{end_date}
+		, #{still_yn}
+		, #{school_name}
+		, #{country}
+		, #{city}
+		, #{major}
+		, #{grade}
+		, SYSDATE()
+	)
 	</insert>
 
 
 	<update id="updateBasicInfo">
 	/* resume.updateBasicInfo : 이력서 기본정보를 update */
-
-
+	UPDATE RESUME SET
+		TITLE = #{title}
+		, SUMMARY = #{summary}
+		, REMARI = #{remark}
+		, MOD_DATE = SYSDATE()
+	WHERE ID = #{id}
+	AND USR_ID = #{usr_id}
 	</update>
 
 
 	<update id="updateCareerInfo">
 	/* resume.updateCareerInfo : 이력서 경력정보를 update */
-
-
+	UPDATE CAREER SET
+		START_DATE = #{start_date}
+		, END_DATE = #{end_date}
+		, COMPANY_NAME = #{company_name}
+		, COUNTRY = #{country}
+		, CITY = #{city}
+		, JOB_DUTY = #{job_duty}
+		, POSITION = #{position}
+		, MOD_DATE = SYSDATE()
+	WHERE ID = #{id}
+	AND RESUME_ID = #{resume_id}
 	</update>
 
 
 	<update id="updateAcademicInfo">
 	/* resume.updateAcademicInfo : 이력서 학력정보를 update */
-
-
+	UPDATE ACADEMIC SET
+		START_DATE = #{start_date}
+		, END_DATE = #{end_date}
+		, STILL_YN = #{still_yn}
+		, SCHOOL_NAME = #{school_name}
+		, COUNTRY = #{country}
+		, CITY = #{city}
+		, MAJOR = #{major}
+		, GRADE = #{grade}
+		, MOD_DATE = SYSDATE()
+	WHERE ID = #{id}
+	AND RESUME_ID = #{resume_id}
 	</update>
 
 
 	<delete id="deleteBasicInfo">
 	/* resume.deleteBasicInfo : 이력서 기본정보를 delete */
-
-
+	DELETE FROM RESUME
+	WHERE ID = #{id}
+	AND USR_ID = #{usr_id}
 	</delete>
 
 
 	<delete id="deleteCareerList">
 	/* resume.deleteCareerList : 이력서 경력정보 목록을 delete */
-
-
+	DELETE FROM CAREER
+	WHERE RESUME_ID = #{resume_id}
 	</delete>
 
 
 	<delete id="deleteAcademicList">
 	/* resume.deleteAcademicList : 이력서 학력정보 목록을 delete */
-
-
+	DELETE FROM ACADEMIC
+	WHERE RESUME_ID = #{resume_id}
 	</delete>
 
 
 	<delete id="deleteCareerInfo">
 	/* resume.deleteCareerList : 이력서 경력정보를 delete */
-
-
+	DELETE FROM CAREER
+	WHERE ID = #{id}
+	AND RESUME_ID = #{resume_id}
 	</delete>
 
 
 	<delete id="deleteAcademicInfo">
 	/* resume.deleteCareerList : 이력서 학력정보를 delete */
-
-
+	DELETE FROM ACADEMIC
+	WHERE ID = #{id}
+	AND RESUME_ID = #{resume_id}
 	</delete>
 
 

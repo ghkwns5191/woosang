@@ -60,8 +60,8 @@ public class ResumeController {
 	*	, TITLE
 	*	, SUMMARY
 	*	, REMARK
-	*	, REGDATE
-	*	, MODDATE
+	*   , REG_DATE
+	*   , MOD_DATE
 	*/
 
 	/* 
@@ -75,8 +75,8 @@ public class ResumeController {
 	*   , CITY
 	*	, JOB_DUTY
 	*	, POSITION
-	*   , REGDATE
-	*   , MODDATE
+	*   , REG_DATE
+	*   , MOD_DATE
 	*/
 
 	/* 
@@ -91,8 +91,8 @@ public class ResumeController {
 	*   , CITY
 	*	, MAJOR
 	*	, GRADE
-	*   , REGDATE
-	*   , MODDATE
+	*   , REG_DATE
+	*   , MOD_DATE
 	*/
 
 
