@@ -53,6 +53,49 @@ public class ResumeController {
 	* 성공 시 홈 화면으로 이동.
 	*/
 
+	/* 
+	* 이력서 기본정보 테이블 정리 (TABLE_NAME = RESUME)
+	*	ID
+	*   , USR_ID
+	*	, TITLE
+	*	, SUMMARY
+	*	, REMARK
+	*	, REGDATE
+	*	, MODDATE
+	*/
+
+	/* 
+	* 경력사항 테이블 정리 (TABLE_NAME = CAREER)
+	*	ID
+	*   , RESUME_ID
+	*	, START_DATE
+	*	, END_DATE
+	*	, COMPANY_NAME
+	*   , COUNTRY
+	*   , CITY
+	*	, JOB_DUTY
+	*	, POSITION
+	*   , REGDATE
+	*   , MODDATE
+	*/
+
+	/* 
+	*  학력사항 테이블 정리 (TABLE_NAME = ACADEMIC)
+	*	ID
+	*   , RESUME_ID
+	*	, START_DATE
+	*	, END_DATE
+	*   , STILL_YN
+	*	, SCHOOL_NAME
+	*   , COUNTRY
+	*   , CITY
+	*	, MAJOR
+	*	, GRADE
+	*   , REGDATE
+	*   , MODDATE
+	*/
+
+
 	// 이력서 조회 화면으로 이동.
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String getResumeListByUser(HttpServletRequest request

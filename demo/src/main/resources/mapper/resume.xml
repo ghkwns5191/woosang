@@ -8,21 +8,46 @@
 	<select id="getResumeListByUser" resultType="map">
 	/* resume.getResumeListByUser : 접속자의 이력서 list 조회 */
 	<!-- 이력서 테이블은 사용자 id 를 포함하므로 접속자의 id 를 갖는 모든 이력서를 가져오면 됨. (subquery 사용) -->
-
+	SELECT
+		ID
+		, TITLE
+		, REGDATE
+		, MODDATE
+	FROM RESUME
+	WHERE USR_ID = {usr_id}
 	</select>
 
 
 	<select id="getBasicInfo" resultType="map">
 	/* resume.getBasicInfo : 선택한 이력서의 상세 내용 중 기본정보를 표기 */
 	<!-- 이력서 id 값에 따른 데이터 select -->
-
+	SELECT
+		USR_ID
+		, TITLE
+		, SUMMARY
+		, REMARK
+	FROM RESUME
+	WHERE ID = #{id}
 	</select>
 
 
 	<select id="getCareerList" resultType="map">
 	/* resume.getCareerList : 해당 이력서 header 값에 해당하는 모든 경력사항을 불러옴. */
 	<!-- 이력서 id 값은 이미 경력사항에 들어갈 예정으로, 해당 id 값을 기준으로 불러오면 된다. -->
-
+	SELECT
+		ID
+		, RESUME_ID
+		, START_DATE
+		, END_DATE
+		, COMPANY_NAME
+		, COUNTRY
+		, CITY
+		, JOB_DUTY
+		, POSITION
+		, REGDATE
+		, MODDATE
+	FROM CAREER
+	WHERE RESUME_ID = #{resume_id}
 	</select>
 
 

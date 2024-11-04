@@ -52,7 +52,7 @@ public class HomeController {
 	*/
 
 	/* 
-	* 사용자 테이블 필드 정리
+	* 사용자 테이블 필드 정리 (TABLE_NAME = USR)
 	*	ID
 	*	, USERNAME
 	*	, PASSWORD
