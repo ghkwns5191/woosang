@@ -65,13 +65,22 @@ public class HomeController {
 	*	, REG_DATE
 	*	, ROLE_V
 	*/
+	
+	// 회원가입 화면으로 이동.
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	public String home(HttpServletRequest request
+						, HttpServletResponse response) {
+
+		return "/home.html";
+	}
+	
 
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(HttpServletRequest request
 						, HttpServletResponse response) {
 
-		return "/join";
+		return "/join.html";
 	}
 	
 	// 실제 회원가입 로직 호출.
@@ -94,7 +103,7 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request
 						, HttpServletResponse response) {
-		return "/login";
+		return "/login.html";
 	}
 
 	// 로그인 화면에서 로그인 진행.

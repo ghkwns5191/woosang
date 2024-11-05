@@ -14,7 +14,7 @@
 		, REG_DATE
 		, MOD_DATE
 	FROM RESUME
-	WHERE USR_ID = {usr_id}
+	WHERE USR_ID = #{usr_id}
 	</select>
 
 
@@ -136,6 +136,7 @@
 	VALUES
 	(	
 		#{id}
+		, #{resume_id}
 		, #{start_date}
 		, #{end_date}
 		, #{company_name}

@@ -32,4 +32,13 @@ public class Util {
 		return map;
 		
 	}
+	
+	public static Map<String, Object> convertKeysToLowerCase(Map<String, Object> originalMap) {
+	    Map<String, Object> lowerCaseMap = new HashMap<>();
+	    
+	    for (Map.Entry<String, Object> entry : originalMap.entrySet()) {
+	        lowerCaseMap.put(entry.getKey().toLowerCase(), entry.getValue());
+	    }
+	    return lowerCaseMap; // 실제 View 이름으로 대체
+	}
 }

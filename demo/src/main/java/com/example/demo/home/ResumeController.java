@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -99,10 +100,12 @@ public class ResumeController {
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
 									, Model model){
-		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);								
+		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
+		log.info("---------");
+		log.info(resumeList.get(0).toString());
 		model.addAttribute("resumeList", resumeList);
 		
-		return "/resume/list";
+		return "/resume/list.html";
 	}
 
 	// 이력서 상세 조회 화면으로 이동. , 본인의 이력서가 아닌 이력서를 조회하려는 경우 list 화면으로 이동시킴.(추가예정)
@@ -117,14 +120,25 @@ public class ResumeController {
 		model.addAttribute("resumeInfo", resumeInfo);
 
 
-		return "/resume/detail";
+		return "/resume/detail.html";
 	}
+	
+	
+	// 이력서 상세 조회 화면으로 이동. , 본인의 이력서가 아닌 이력서를 조회하려는 경우 list 화면으로 이동시킴.(추가예정)
+		@RequestMapping(value="/detail/new", method=RequestMethod.GET)
+		public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
+									, Model model) {
+			
+
+
+			return "/resume/new.html";
+		}
 
 
 
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> inputResume(@RequestBody Map<String, Object> inputParams) {
-		this.resumeService.inputResume(inputParams);
+	public ResponseEntity<Map<String, Object>> inputResume(@RequestBody Map<String, Object> inputParams, HttpServletRequest request, HttpServletResponse response) {
+		this.resumeService.inputResume(inputParams, request);
 
 		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
 	}

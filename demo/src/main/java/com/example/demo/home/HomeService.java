@@ -86,7 +86,7 @@ public class HomeService {
 		log.info(session.toString());
 		result.put("username", username);
 		result.put("loginFlag", loginFlag);
-		result.put("session", session);
+		
 		
 		
 		return result;

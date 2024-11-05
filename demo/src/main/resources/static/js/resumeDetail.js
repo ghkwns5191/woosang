@@ -112,7 +112,7 @@ function onInsert() {
 			job_duty : document.getElementsByClassName("careerJobDuty")[i].value,
 			posi : document.getElementsByClassName("careerPosi")[i].value,
 		}
-		careerList.add(careerInfo);
+		careerList.push(careerInfo);
 	}
 
 	for (let i = 0; i < academicCnt; i++) {
@@ -125,7 +125,7 @@ function onInsert() {
 			major : document.getElementsByClassName("academicMajor")[i].value,
 			grade : document.getElementsByClassName("academicGrade")[i].value,
 		}
-		academicList.add(careerInfo);
+		academicList.push(academicInfo);
 	}
 
 

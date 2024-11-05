@@ -56,7 +56,23 @@ public class ResumeService {
 
 		// 학력 정보
 		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
-
+		
+		basicInfo = Util.convertKeysToLowerCase(basicInfo);
+		for (int i = 0; i < careerList.size(); i++) {
+			Map<String, Object> data = careerList.get(i);
+			data = Util.convertKeysToLowerCase(data);
+			careerList.set(i, data);
+		}
+		
+		for (int i = 0; i < academicList.size(); i++) {
+			Map<String, Object> data = academicList.get(i);
+			data = Util.convertKeysToLowerCase(data);
+			academicList.set(i, data);
+		}
+		
+		log.info(basicInfo.toString());
+		log.info(careerList.get(0).toString());
+		log.info(academicList.get(0).toString());
 
 		result.put("basicInfo", basicInfo);
 		result.put("careerList", careerList);
@@ -66,7 +82,7 @@ public class ResumeService {
 	}
 
 	// 이력서 정보 신규 등록.
-	public void inputResume(Map<String, Object> inputParams) {
+	public void inputResume(Map<String, Object> inputParams, HttpServletRequest request) {
 		Map<String, Object> basicInfo = (Map<String, Object>) inputParams.get("basicInfo");
 		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
 		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
@@ -75,7 +91,9 @@ public class ResumeService {
 
 		// 이력서 기본정보(header)
 		String id = UUID.randomUUID().toString();
+		String usr_id = (String) request.getSession().getAttribute("usr_id");
 		basicInfo.put("id", id);
+		basicInfo.put("usr_id", usr_id);
 		sqlSession.insert(NAMESPACE + "insertBasicInfo", basicInfo);
 
 		// 경력사항 저장
