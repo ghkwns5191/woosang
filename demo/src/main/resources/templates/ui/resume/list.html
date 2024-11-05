@@ -14,12 +14,19 @@
 
 <body>
     <div class="container">
-        홈입니다.
-        <button type="button" class="btn btn-primary" onclick="toSignIn()">Sign In</button><!--로그인 버튼-->
-        <button type="button" class="btn btn-primary" onclick="toSignUp()">Sign Up</button><!--회원가입 버튼-->
-        <button type="button" class="btn btn-primary" onclick="toResume()">Resume</button><!--이력정보 버튼-->
+        이력서 목록 화면 입니다.
+        <table th:each="list : ${resumeList}">
+            <tbody>
+                <tr
+                    th:id = "${list.id}"
+                    th:onclick="toDetail(this.getAttribute('id'))">
+                    <td><label>Title</label></td>
+                    <td><label th:text="${list.title}"></label></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 
-<script src="../../js/home.js"></script>
+<script src="../../../js/resumeList.js"></script>
 <script src="../../bootstrap/js/bootstrap.bundle.min.js"></script>

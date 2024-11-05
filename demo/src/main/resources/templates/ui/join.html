@@ -10,18 +10,62 @@
 <body>
     <div class="container">
         <table class="table">
-            <tr>
-                <td>1</td>
-                <td><input type="text" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>1</td>
-            </tr>
+            <colgroup>
+                <col style="width: 30%;"></col>
+                <col></col>
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td><label>Username</label></td>
+                    <td><input id="username" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Password</label></td>
+                    <td><input id="password" type="password" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Confirm Password</label></td>
+                    <td><input id="password1" type="password" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>First Name</label></td>
+                    <td><input id="firstName" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Middle Name</label></td>
+                    <td><input id="middleName" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Last Name</label></td>
+                    <td><input id="lastName" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Phone</label></td>
+                    <td><input id="lastName" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Email</label></td>
+                    <td><input id="lastName" type="text" class="form-control"/></td>
+                </tr>
+                <tr>
+                    <td><label>Nationality</label></td>
+                    <td><input id="lastName" type="text" class="form-control"/></td>
+                </tr>
+            </tbody>
         </table>
+        <table class="table">
+            <colgroup>
+              <col style="width: 33%"></col>
+              <col style="width: 33%"></col>
+              <col style="width: 33%"></col>
+            </colgroup>
+            <tbody>
+              <tr>
+                <td><button onclick="onJoin()" class="btn btn-primary">회원가입</button></td>
+                <td><button onclick="onToLogin()" class="btn btn-primary">로그인</button></td>
+                <td><button onclick="onBack()" class="btn btn-primary">뒤로가기</button></td>
+              </tr>
+            </tbody>
+          </table>
     </div>
 <script src="../../js/chat.js"></script>

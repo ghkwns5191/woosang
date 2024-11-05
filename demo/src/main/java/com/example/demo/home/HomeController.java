@@ -71,7 +71,7 @@ public class HomeController {
 	public String join(HttpServletRequest request
 						, HttpServletResponse response) {
 
-		return "회원가입 페이지";
+		return "/join";
 	}
 	
 	// 실제 회원가입 로직 호출.
@@ -94,7 +94,7 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request
 						, HttpServletResponse response) {
-		return "로그인 화면";
+		return "/login";
 	}
 
 	// 로그인 화면에서 로그인 진행.

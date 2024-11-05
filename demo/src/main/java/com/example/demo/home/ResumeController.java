@@ -116,7 +116,7 @@ public class ResumeController {
 		model.addAttribute("resumeInfo", resumeInfo);
 
 
-		return "이력서 상세 조회 화면";
+		return "/resume/list";
 	}
 
 

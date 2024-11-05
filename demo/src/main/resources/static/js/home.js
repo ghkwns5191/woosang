@@ -1,7 +1,11 @@
 function toSignIn() {
-    location.href = "/login";
+    window.location.href = "/login";
 }
 
 function toSignUp() {
-    location.href = "/join";
+    window.location.href = "/join";
+}
+
+function toResume() {
+    window.location.href = "/resume/list";
 }
