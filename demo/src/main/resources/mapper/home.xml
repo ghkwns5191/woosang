@@ -51,6 +51,7 @@
 	SELECT
 		USERNAME
 		, PASSWORD
+		, ID
 	FROM USR
 	WHERE USERNAME = #{username}
 	</select>

@@ -51,6 +51,7 @@ public class HomeService {
 		Map<String, Object> infoById = Util.mapValidate(sql.selectOne(NAMESPACE + "getInfoById", loginInfo));
 		log.info((String)infoById.get("USERNAME"));
 		log.info(infoById.toString());
+		String usr_id = (String) infoById.get("ID");
 		if ((String)infoById.get("USERNAME") == null) {
 			loginFlag = false;
 
@@ -70,6 +71,7 @@ public class HomeService {
 				if (loginFlag) {
 					request.getSession().invalidate();  // 기존 세션 무효화
 					session = request.getSession(true);
+					session.setAttribute("usr_id", usr_id);
 				} else {
 					
 				}

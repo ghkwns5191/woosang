@@ -94,34 +94,35 @@ public class ResumeController {
 	*/
 
 
-	// 이력서 조회 화면으로 이동.
+	// 이력서 조회 화면으로 이동. , 로그인 정보 받아오는 방법 강구 필요.
 	@RequestMapping(value="/list", method=RequestMethod.GET)
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
-									, @RequestBody Map<String, Object> loginInfo
 									, Model model){
-		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(loginInfo);								
+		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);								
 		model.addAttribute("resumeList", resumeList);
 		
-		return "이력서 목록 조회 화면";
+		return "/resume/list";
 	}
 
-	// 이력서 상세 조회 화면으로 이동.
-	@RequestMapping(value="/detail", method=RequestMethod.GET)
+	// 이력서 상세 조회 화면으로 이동. , 본인의 이력서가 아닌 이력서를 조회하려는 경우 list 화면으로 이동시킴.(추가예정)
+	@RequestMapping(value="/detail/{id}", method=RequestMethod.GET)
 	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
-								, @RequestBody Map<String, Object> resumeInfo
+								, @PathVariable("id") String id
 								, Model model) {
-		
+		Map<String, Object> resumeInfo = new HashMap<>();
+		resumeInfo.put("id", id);			
+		resumeInfo.put("resume_id", id);			
 		resumeInfo = this.resumeService.getResumeInfo(resumeInfo);
 		model.addAttribute("resumeInfo", resumeInfo);
 
 
-		return "/resume/list";
+		return "/resume/detail";
 	}
 
 
 
-	@RequestMapping(value="/input", method=RequestMethod.POST)
+	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> inputResume(@RequestBody Map<String, Object> inputParams) {
 		this.resumeService.inputResume(inputParams);
 

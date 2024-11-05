@@ -32,8 +32,12 @@ public class ResumeService {
 	
 
 	// 화면에 이력서 리스트를 뿌림.
-	public List<Map<String, Object>> getResumeListByUser(Map<String, Object> loginInfo) {
-
+	public List<Map<String, Object>> getResumeListByUser(HttpServletRequest request
+														, HttpServletResponse response) {
+		Map<String, Object> loginInfo = new HashMap<>();
+		HttpSession session = request.getSession();
+		String usr_id = (String) session.getAttribute("usr_id");
+		loginInfo.put("usr_id", usr_id);
 		// 사용자 이름을 이용해 uuid 를 찾아서 해당 값을 기준으로 이력서 정보를 load. (쿼리문으로 바로 처리 가능. parameter 는 username)
 		return sqlSession.selectList(NAMESPACE + "getResumeListByUser", loginInfo);
 	}
