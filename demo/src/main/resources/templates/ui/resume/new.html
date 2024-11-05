@@ -5,7 +5,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../../../static/css/index.css" />
+    <link rel="stylesheet" href="../../../static/css/new.css"/>
     <link rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="../../../static/bootstrap/css/bootstrap.min.css">
     <!--<link rel="javascript" href="../../bootstrap/js/bootstrap.bundle.min.js">-->
@@ -45,38 +45,14 @@
                 <tr>
                     <th>경력정보</th>
                 </tr>
-                <tr>
-                    <th><button onclick="addCareer()" class="btn btn-primary">경력정보 추가</button></th>
-                </tr>
+                
             </thead>
             <tbody id="careerAppPoint">
+                
+            </tbody>
+            <tbody>
                 <tr>
-                    <td><label>Company Name</label></td>
-                    <td><input class="form-control careerCompanyName" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Start Date</label></td>
-                    <td><input class="form-control careerStartDate" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>End Date</label></td>
-                    <td><input class="form-control careerEndDate" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Country</label></td>
-                    <td><input class="form-control careerCountry" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>City</label></td>
-                    <td><input class="form-control careerCity" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Job Duty</label></td>
-                    <td><input class="form-control careerJobDuty" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Position</label></td>
-                    <td><input class="form-control careerPosi" type="text"/></td>
+                    <td><button onclick="addCareer()" class="btn btn-primary">경력정보 추가</button></td>
                 </tr>
             </tbody>
         </table>
@@ -86,38 +62,18 @@
                     <th>학력정보</th>
                 </tr>
             </thead>
+            <tbody id="academicAppPoint">
+                
+            </tbody>
             <tbody>
                 <tr>
-                    <td><label>School Name</label></td>
-                    <td><input class="form-control academicSchoolName" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Start Date</label></td>
-                    <td><input class="form-control academicStartDate" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>End Date</label></td>
-                    <td><input class="form-control academicEndDate" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Country</label></td>
-                    <td><input class="form-control academicCountry" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>City</label></td>
-                    <td><input class="form-control academicCity" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Major</label></td>
-                    <td><input class="form-control academicMajor" type="text"/></td>
-                </tr>
-                <tr>
-                    <td><label>Grade</label></td>
-                    <td><input class="form-control academicGrade" type="text"/></td>
+                    <td><button onclick="addAcademic()" class="btn btn-primary">학력정보 추가</button></td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <button onclick="onInsert()" class="btn btn-primary">저장하기</button>
 </body>
 
 <script src="../../../static/js/ajax.js"></script>

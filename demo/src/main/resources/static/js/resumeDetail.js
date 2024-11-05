@@ -2,11 +2,20 @@
  * 
  */
  
+var careerCnt = 0;
+var academicCnt = 0;
+
 
 function addCareer() {
 	var tbody = document.getElementById("careerAppPoint");
-	tbody.innerHTML = 
+	var newarea = document.createElement("tbody");
+	newarea.classList.add("tablebody");
+	newarea.innerHTML = 
 	'<tr>'
+	+ '<td><label></label></td>'
+	+ '<td><label></label></td>'
+	+ '</tr>'
+	+ '<tr>'
 	+ 	'<td><label>Company Name</label></td>'
 	+	'<td><input class="form-control careerCompanyName" type="text"/></td>'
 	+ '</tr>'
@@ -33,7 +42,52 @@ function addCareer() {
 	+ '<tr>'
 	+	'<td><label>Position</label></td>'
 	+	'<td><input class="form-control careerPosi" type="text"/></td>'
+	+ '</tr>';
+	tbody.appendChild(newarea);
+
+	careerCnt++;
+}
+
+
+function addAcademic() {
+	var tbody = document.getElementById("academicAppPoint");
+	var newarea = document.createElement("tbody");
+	newarea.innerHTML = 
+	'<tr>'
+	+ '<td><label></label></td>'
+	+ '<td><label></label></td>'
 	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>School Name</label></td>'
+	+	'<td><input class="form-control academicSchoolName" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>Start Date</label></td>'
+	+	'<td><input class="form-control academicStartDate" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>End Date</label></td>'
+	+	'<td><input class="form-control academicEndDate" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>Country</label></td>'
+	+	'<td><input class="form-control academicCountry" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>City</label></td>'
+	+	'<td><input class="form-control academicCity" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>Major</label></td>'
+	+	'<td><input class="form-control academicMajor" type="text"/></td>'
+	+ '</tr>'
+	+ '<tr>'
+	+	'<td><label>Grade</label></td>'
+	+	'<td><input class="form-control academicGrade" type="text"/></td>'
+	+ '</tr>';
+	tbody.appendChild(newarea);
+
+	academicCnt++;
 }
 
 function onInsert() {
@@ -42,8 +96,7 @@ function onInsert() {
 		summary: document.getElementById("summary").value
 	}
 
-	var careerCnt = 0;
-	var academicCnt = 0;
+	
 
 	
 	var careerList = [];
