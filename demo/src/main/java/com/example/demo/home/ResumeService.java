@@ -29,6 +29,18 @@ public class ResumeService {
 	SqlSession sqlSession;
 	
 	private static final String NAMESPACE = "resume.";
+
+
+	// 신규 이력서 작성 시 사용자 기본정보를 조회
+	public Map<String, Object> getUsrDataforNewResume(HttpServletRequest request
+														, HttpServletResponse response) {
+		Map<String, Object> loginInfo = new HashMap<>();
+		HttpSession session = request.getSession();
+		String usr_id = (String) session.getAttribute("usr_id");
+		loginInfo.put("usr_id", usr_id);
+
+		return Util.convertKeysToLowerCase(Util.mapValidate(sqlSession.selectOne(NAMESPACE + "getUsrDataforNewResume", loginINfo)));
+	}
 	
 
 	// 화면에 이력서 리스트를 뿌림.

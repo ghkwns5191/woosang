@@ -5,11 +5,39 @@
 
 <mapper namespace="resume">
 
+	<select id="getUsrDataforNewResume" resultType="map">
+	/* resume.getUsrDataforNewResume : 신규 이력서를 제작하는 화면에서 사용자 데이터 조회 */
+	SELECT
+		FIRST_NAME
+		, LAST_NAME
+		, PHONE
+		, EMAIL
+	FROM USR
+	WHERE ID = #{usr_id}
+	</select>
+
 	<select id="getResumeListByUser" resultType="map">
 	/* resume.getResumeListByUser : 접속자의 이력서 list 조회 */
 	<!-- 이력서 테이블은 사용자 id 를 포함하므로 접속자의 id 를 갖는 모든 이력서를 가져오면 됨. (subquery 사용) -->
-	SELECT
+	SELECT 
 		ID
+		, USR_ID
+		, (SELECT
+				FIRST_NAME
+			FROM USR
+			WHERE ID = RESUME.USR_ID) AS FIRST_NAME
+		, (SELECT
+				LAST_NAME
+			FROM USR
+			WHERE ID = RESUME.USR_ID) AS LAST_NAME
+		, (SELECT
+				PHONE
+			FROM USR
+			WHERE ID = RESUME.USR_ID) AS PHONE
+		, (SELECT
+				EMAIL
+			FROM USR
+			WHERE ID = RESUME.USR_ID) AS EMAIL
 		, TITLE
 		, REG_DATE
 		, MOD_DATE

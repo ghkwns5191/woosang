@@ -128,9 +128,8 @@ public class ResumeController {
 		@RequestMapping(value="/detail/new", method=RequestMethod.GET)
 		public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
 									, Model model) {
-			
-
-
+			Map<String, Object> usrData = this.resumeService.getUsrDataforNewResume(request, response);
+			model.addAttribute("usrInfo", usrData);
 			return "/resume/new.html";
 		}
 
