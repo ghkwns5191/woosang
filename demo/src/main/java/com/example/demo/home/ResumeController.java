@@ -101,8 +101,6 @@ public class ResumeController {
 									, HttpServletResponse response
 									, Model model){
 		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
-		log.info("---------");
-		log.info(resumeList.get(0).toString());
 		model.addAttribute("resumeList", resumeList);
 		
 		return "/resume/list.html";

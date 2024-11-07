@@ -178,3 +178,7 @@ function onToLogin() {
 function onBack() {
 	window.location.href="/";
 }
+
+function onUpdate() {
+	window.location.href="/resume/detail/revise";
+}

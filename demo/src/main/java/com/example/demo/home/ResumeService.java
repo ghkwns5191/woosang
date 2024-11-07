@@ -39,7 +39,7 @@ public class ResumeService {
 		String usr_id = (String) session.getAttribute("usr_id");
 		loginInfo.put("usr_id", usr_id);
 
-		return Util.convertKeysToLowerCase(Util.mapValidate(sqlSession.selectOne(NAMESPACE + "getUsrDataforNewResume", loginINfo)));
+		return Util.convertKeysToLowerCase(Util.mapValidate(sqlSession.selectOne(NAMESPACE + "getUsrDataforNewResume", loginInfo)));
 	}
 	
 

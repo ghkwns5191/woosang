@@ -24,3 +24,7 @@ function onToLogin() {
 function onBack() {
 	window.location.href="/";
 }
+
+function onNew() {
+	window.location.href="/resume/detail/new";
+}
