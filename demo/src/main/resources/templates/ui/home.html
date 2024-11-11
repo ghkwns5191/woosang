@@ -13,11 +13,28 @@
 
 
 <body>
-    <div class="container">
-        홈입니다.
-        <button type="button" class="btn btn-primary" onclick="toSignIn()">Sign In</button><!--로그인 버튼-->
-        <button type="button" class="btn btn-primary" onclick="toSignUp()">Sign Up</button><!--회원가입 버튼-->
-        <button type="button" class="btn btn-primary" onclick="toResume()">Resume</button><!--이력정보 버튼-->
+    <div class="container-fluid">
+    
+    
+        <div class="row">
+            <div th:if="${loginFlag == 'true'}" class="col-12 text-end">
+                <button type="button" class="btn btn-primary btn-sm" onclick="toLogOut()">Sign Out</button><!--로그아웃 버튼-->
+            </div>
+            <div th:if="${loginFlag == 'false'}" class="col-12 text-end">
+                <button type="button" class="btn btn-primary btn-sm" onclick="toSignIn()">Sign In</button><!--로그인 버튼-->
+                <button type="button" class="btn btn-primary btn-sm" onclick="toSignUp()">Sign Up</button><!--회원가입 버튼-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                본문 입니다.
+                <button type="button" class="btn btn-primary btn-lg" onclick="toResume()">Resume</button><!--회원가입 버튼-->
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+        
     </div>
 </body>
 

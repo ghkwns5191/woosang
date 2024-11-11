@@ -1,6 +1,5 @@
 package com.example.demo.home;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,21 +69,8 @@ public class ResumeService {
 		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
 		
 		basicInfo = Util.convertKeysToLowerCase(basicInfo);
-		for (int i = 0; i < careerList.size(); i++) {
-			Map<String, Object> data = careerList.get(i);
-			data = Util.convertKeysToLowerCase(data);
-			careerList.set(i, data);
-		}
-		
-		for (int i = 0; i < academicList.size(); i++) {
-			Map<String, Object> data = academicList.get(i);
-			data = Util.convertKeysToLowerCase(data);
-			academicList.set(i, data);
-		}
-		
-		log.info(basicInfo.toString());
-		log.info(careerList.get(0).toString());
-		log.info(academicList.get(0).toString());
+		careerList = Util.convertKeysToLowerCase(careerList);
+		academicList = Util.convertKeysToLowerCase(academicList);
 
 		result.put("basicInfo", basicInfo);
 		result.put("careerList", careerList);
@@ -99,7 +85,9 @@ public class ResumeService {
 		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
 		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
 
-
+		basicInfo = Util.convertKeysToLowerCase(basicInfo);
+		careerList = Util.convertKeysToLowerCase(careerList);
+		academicList = Util.convertKeysToLowerCase(academicList);
 
 		// 이력서 기본정보(header)
 		String id = UUID.randomUUID().toString();

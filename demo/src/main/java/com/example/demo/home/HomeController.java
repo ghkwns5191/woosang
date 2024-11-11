@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.example.demo.utils.Util;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -69,8 +66,18 @@ public class HomeController {
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String home(HttpServletRequest request
-						, HttpServletResponse response) {
-
+						, HttpServletResponse response
+						, Model model) {
+		HttpSession session = request.getSession();
+		
+		
+		if (session.getAttribute("usr_id") != null) {
+			model.addAttribute("loginFlag", "true");
+		} else {
+			model.addAttribute("loginFlag", "false");
+		}
+		
+		
 		return "/home.html";
 	}
 	
@@ -113,7 +120,19 @@ public class HomeController {
 						, @RequestBody Map<String, Object> loginInfo) {
 
 		Map<String, Object> result = this.homeService.login(request, response, loginInfo);
-		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+
+	// 로그인 객체 로그아웃 처리
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseEntity<Map<String, Object>> logout(HttpServletRequest request
+                        , HttpServletResponse response) {
+
+        this.homeService.logOut(request);
+        Map<String, Object> result = new HashMap<>();
+        result.put("logoutInfo", true);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
+    }
 }

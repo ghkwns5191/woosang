@@ -49,15 +49,17 @@ public class HomeService {
 		 * 일치하면 성공, 일치하지 않으면 비밀번호 오류로 실패.
 		 */
 		Map<String, Object> infoById = Util.mapValidate(sql.selectOne(NAMESPACE + "getInfoById", loginInfo));
-		log.info((String)infoById.get("USERNAME"));
-		log.info(infoById.toString());
-		String usr_id = (String) infoById.get("ID");
-		if ((String)infoById.get("USERNAME") == null) {
+		infoById = Util.convertKeysToLowerCase(infoById);
+		
+		String usr_id = Util.mapToString(infoById,"id");
+		
+		log.info(Util.mapToString(infoById,"id"));
+		if ((String)infoById.get("username") == null) {
 			loginFlag = false;
 
 		} else {
-			username = Util.mapToString(infoById, "USERNAME");
-			String savedPassword = Util.mapToString(infoById, "PASSWORD");
+			username = Util.mapToString(infoById, "username");
+			String savedPassword = Util.mapToString(infoById, "password");
 			String inputPassword = Util.mapToString(loginInfo, "password");
 			
 			try {
@@ -71,7 +73,8 @@ public class HomeService {
 				if (loginFlag) {
 					request.getSession().invalidate();  // 기존 세션 무효화
 					session = request.getSession(true);
-					session.setAttribute("usr_id", usr_id);
+					
+					Util.setSessionAttribute(session, "usr_id", usr_id);
 				} else {
 					
 				}
@@ -79,18 +82,23 @@ public class HomeService {
 				
 			}
 			
-			
 		}
-		log.info(username);
-		log.info(String.valueOf(loginFlag));
-		log.info(session.toString());
+
 		result.put("username", username);
 		result.put("loginFlag", loginFlag);
 		
-		
-		
 		return result;
 	}
+	
+	
+	
+	public void logOut(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("usr_id") != null) {
+            request.getSession().invalidate();  // 기존 세션 무효화
+            session = request.getSession(true);
+        }
+    }
 	
 	
 	
@@ -114,8 +122,8 @@ public class HomeService {
 		}
 		
 		joinInfo.put("password", password);
-		
 		List<Map<String, Object>> usernameData = sql.selectList(NAMESPACE + "checkUsername", joinInfo);
+		usernameData = Util.convertKeysToLowerCase(usernameData);
 		
 		if (usernameData.size() > 0) {
 			joinFlag = false;
