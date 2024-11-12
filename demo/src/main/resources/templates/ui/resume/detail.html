@@ -258,6 +258,9 @@
           </div>
 
     </div>
+
+
+    <input type="text" th:if="${csrf_token != null}" th:value="${csrf_token}" hidden/>
 </body>
 
 <script src="../../../js/ajax.js"></script>

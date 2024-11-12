@@ -16,7 +16,7 @@
 
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         이력서 목록 화면 입니다.
         <table th:each="list : ${resumeList}">
             <tbody>
@@ -30,6 +30,8 @@
         </table>
         <button type="button" onclick="onNew()" class="btn btn-primary">Create Resume</button>
     </div>
+
+    <input type="text" th:if="${csrf_token != null}" th:value="${csrf_token}" hidden/>
 </body>
 
 <script src="../../../js/ajax.js"></script>
