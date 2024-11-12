@@ -75,6 +75,7 @@ public class HomeService {
 					session = request.getSession(true);
 					
 					Util.setSessionAttribute(session, "usr_id", usr_id);
+					Util.setSessionAttribute(session, "csrf_token", UUID.randomUUID().toString());
 				} else {
 					
 				}

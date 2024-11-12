@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.example.demo.utils.Util;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -73,6 +75,7 @@ public class HomeController {
 		
 		if (session.getAttribute("usr_id") != null) {
 			model.addAttribute("loginFlag", "true");
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 		} else {
 			model.addAttribute("loginFlag", "false");
 		}

@@ -77,7 +77,12 @@ public class Util {
 
     public static String getSessionString(HttpSession session, String key) {
 
-        return (String) session.getAttribute(key);
+        if (session.getAttribute(key) != null) {
+            return (String) session.getAttribute(key);
+        } else {
+            return null;
+        }
+        
 
     }
 
@@ -85,15 +90,24 @@ public class Util {
 
     public static Map<String, Object> getSessionMap(HttpSession session, String key) {
 
-        return (Map<String, Object>) session.getAttribute(key);
+        if (session.getAttribute(key) != null) {
+            return (Map<String, Object>) session.getAttribute(key);
+        } else {
+            return null;
+        }
+        
 
     }
 
  
 
     public static List<Map<String, Object>> getSessionListMap(HttpSession session, String key) {
-
-        return (List<Map<String, Object>>) session.getAttribute(key);
+        
+        if (session.getAttribute(key) != null) {
+            return (List<Map<String, Object>>) session.getAttribute(key);
+        } else {
+            return null;
+        }
 
     }
 
@@ -113,5 +127,61 @@ public class Util {
 
     }
 
+
+
+    public static boolean isNullOrEmpty(String str) {
+        boolean result = false;
+        if (str.equals("") || str == null) {
+            result = true;
+        } else {
+            result = false;
+        }
+        return result;
+    }
+
+
+    // csrf 검증
+    public static boolean checkCsrf(HttpSession session, Map<String, Object> param) {
+        boolean result = false;
+        param = convertKeysToLowerCase(param);
+        String csrf_token = mapToString(param, "csrf_token");
+        String csrf_token_server = getSessionString(session, "csrf_token");
+
+        if (csrf_token.equals(csrf_token_server)) {
+            result = true;
+        }
+        else {
+            result = false;
+        }
+        return result;
+    }
+
+    // xss 스크립트 치환
+    public static Map<String, Object> convertXssScript(Map<String, Object> map) {
+
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            if (entry.getValue().getClass().getName().equals("java.lang.String")) {
+                entry.getValue().replaceAll("<", "&lt;");
+                entry.getValue().replaceAll(">", "&gt;");
+                entry.getValue().replaceAll(",", "&quot;");
+                entry.getValue().replaceAll('"', "&#x27;");
+                entry.getValue().replaceAll("(", "&#40;");
+                entry.getValue().replaceAll(")", "&#41;");
+            }
+            map.put(entry.getKey().toLowerCase(), entry.getValue());
+        }
+        return map;
+
+    }
+
+    public static List<Map<String, Object>> convertXssScript(List<Map<String, Object>> list) {
+        for (int i = 0; i < list.size(); i++) {
+            Map<String, Object> data = list.get(i);
+
+            data = convertXssScript(data);
+            list.set(i, data);
+        }
+        return list;
+    }
 
 }

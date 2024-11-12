@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jcp.xml.dsig.internal.dom.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.example.demo.utils.Util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -100,10 +103,20 @@ public class ResumeController {
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
 									, Model model){
-		List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
-		model.addAttribute("resumeList", resumeList);
-		
-		return "/resume/list.html";
+		String view = "";
+		HttpSession session = request.getSession();
+
+		// 로그인되지 않았을 경우는 홈화면으로 이동.
+		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+			view = "/home.html";
+		} else {
+			List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			model.addAttribute("resumeList", resumeList);
+			view = "/resume/list.html";
+		}
+
+		return view;
 	}
 
 	// 이력서 상세 조회 화면으로 이동. , 본인의 이력서가 아닌 이력서를 조회하려는 경우 list 화면으로 이동시킴.(추가예정)
@@ -111,49 +124,109 @@ public class ResumeController {
 	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
 								, @PathVariable("id") String id
 								, Model model) {
-		Map<String, Object> resumeInfo = new HashMap<>();
-		resumeInfo.put("id", id);			
-		resumeInfo.put("resume_id", id);			
-		resumeInfo = this.resumeService.getResumeInfo(resumeInfo);
-		model.addAttribute("resumeInfo", resumeInfo);
+		
+		// 로그인되지 않았을 경우는 홈화면으로 이동.
+		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+			view = "/home.html";
+		} else {
+			
+			HttpSession session = request.getSession();
+			Map<String, Object> params = new HashMap<>();
+			params.put("resume_id", id);
 
+			if (this.resumeService.validateResumeId(params, session)) {
 
-		return "/resume/detail.html";
+				Map<String, Object> resumeInfo = new HashMap<>();
+				resumeInfo.put("id", id);			
+				resumeInfo.put("resume_id", id);			
+				resumeInfo = this.resumeService.getResumeInfo(resumeInfo);
+				model.addAttribute("resumeInfo", resumeInfo);
+				model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+				view = "/resume/detail.html";
+
+			// 로그인 되었으나, 본인의 이력서가 아닌 타인의 이력서를 조회하려는 경우 list 화면으로 이동.
+			} else {
+				model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+				view = "/resume/list.html";
+			}
+		}
+		return view;
 	}
 	
 	
-	// 이력서 상세 조회 화면으로 이동. , 본인의 이력서가 아닌 이력서를 조회하려는 경우 list 화면으로 이동시킴.(추가예정)
-		@RequestMapping(value="/detail/new", method=RequestMethod.GET)
-		public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
-									, Model model) {
-			Map<String, Object> usrData = this.resumeService.getUsrDataforNewResume(request, response);
-			model.addAttribute("usrInfo", usrData);
-			return "/resume/new.html";
-		}
+	// 이력서 신규생성 화면
+	@RequestMapping(value="/detail/new", method=RequestMethod.GET)
+	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
+								, Model model) {
+		Map<String, Object> usrData = this.resumeService.getUsrDataforNewResume(request, response);
+		model.addAttribute("usrInfo", usrData);
+		model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+		return "/resume/new.html";
+	}
 
 
 
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public ResponseEntity<Map<String, Object>> inputResume(@RequestBody Map<String, Object> inputParams, HttpServletRequest request, HttpServletResponse response) {
-		this.resumeService.inputResume(inputParams, request);
+		
+		HttpSession session = request.getSession();
 
-		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+
+		// csrf 검증 로직
+		if (Util.checkCsrf(session, inputParams)) {
+
+			inputParams = Util.convertXssScript(inputParams);
+			this.resumeService.inputResume(inputParams, request);
+			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		
 	}
 	
 
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> updateResume(@RequestBody Map<String, Object> updateParams) {
-		this.resumeService.updateResume(updateParams);
+	public ResponseEntity<Map<String, Object>> updateResume(@RequestBody Map<String, Object> updateParams, HttpServletRequest request) {
 
-		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+		HttpSession session = request.getSession();
+
+		// csrf 검증 로직
+		if (Util.checkCsrf(session, updateParams)) {
+
+			updateParams = Util.convertXssScript(updateParams);
+			this.resumeService.updateResume(updateParams);
+			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		
 	}
 
 
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> deleteResume(@RequestBody Map<String, Object> deleteParams) {
-		this.resumeService.deleteResume(deleteParams);
+	public ResponseEntity<Map<String, Object>> deleteResume(@RequestBody Map<String, Object> deleteParams, HttpServletRequest request) {
 
-		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+		HttpSession session = request.getSession();
+
+		// csrf 검증 로직
+		if (Util.checkCsrf(session, deleteParams)) {
+
+			deleteParams = Util.convertXssScript(deleteParams);
+			this.resumeService.deleteResume(deleteParams);
+
+			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		
 	}
 	
 }

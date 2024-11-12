@@ -234,4 +234,17 @@ public class ResumeService {
 		sqlSession.delete(NAMESPACE + "deleteCareerList", basicInfo);
 		sqlSession.delete(NAMESPACE + "deleteAcademicList", basicInfo); 
 	}
+
+
+	public boolean validateResumeId(Map<String, Object> params, HttpSession session) {
+		boolean result = false;
+
+		String usr_id_db = Util.mapToString(Util.convertKeysToLowerCase(sqlSession.selectOne(NAMESPACE + "validateResumeId", params)), "usr_id");
+		String usr_id_session = Util.getSessionString(session, "usr_id");
+
+		if (usr_id_db.equals(usr_id_session)) result = true;
+		else result = false;
+
+		return result;
+	} 
 }

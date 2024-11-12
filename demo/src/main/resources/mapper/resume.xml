@@ -309,4 +309,14 @@
 	</delete>
 
 
+
+	<select id="validateResumeId" resultType="map">
+	/* resume.deleteCareerList : 이력서 학력정보를 delete */
+	SELECT
+		USR_ID
+	FROM RESUME
+	WHERE ID = #{resume_id}
+	</select>
+
+
 </mapper>
