@@ -5,26 +5,25 @@
 
 
 function toDetail(id) {
-
-	window.location.href = "/resume/detail/" + id;
+	CM.moveToUrl("/resume/detail/" + id);
 }
 
 
 function onToJoin() {
-	window.location.href = "/join";
+	CM.moveToUrl("/join");
 }
 
 
 function onToLogin() {
-	window.location.href = "/login";
+	CM.moveToUrl("/login");
 }
 
 
 // 뒤로가기(홈화면으로)
 function onBack() {
-	window.location.href="/";
+	window.history.back();
 }
 
 function onNew() {
-	window.location.href="/resume/detail/new";
+	CM.moveToUrl("/resume/detail/new");
 }

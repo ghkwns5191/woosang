@@ -1,47 +1,58 @@
 function toSignIn() {
-    window.location.href = "/login";
+	CM.moveToUrl("/login");
 }
 
 function toSignUp() {
-    window.location.href = "/join";
+	CM.moveToUrl("/join");
 }
 
 function toResume() {
-    window.location.href = "/resume/list";
+	CM.moveToUrl("/resume/list");
 }
 
 function toLogOut() {
 	
-	
-		$.ajax({
-	 	url : "/logout"
-	 	, type : 'post'
-	 	, headers : {              // Http header
-       "Content-Type" : "application/json",
-       "X-HTTP-Method-Override" : "POST"
-     }
-     , dataType : 'json'
-	 	, success : function (data) {
-			console.log(data);
-	 		console.log(data.loginFlag);
+	AJAX.ajaxData(
+		"/logout"
+		, 'post'
+		, {nothing: 'nothing'}
+		, function (data) {
 		
-	 		if (data.logoutInfo) {
-	 			console.log(window.location.origin);
-	 			window.alert("로그아웃 하였습니다.");
-	 			window.location.href="/";
-	 		} else if (!data.logoutInfo) {
-	 			window.alert("아이디 혹은 비밀번호가 잘못되었습니다.");
-	 			document.getElementById("username").value = "";
-	 			document.getElementById("password").value = "";
-	 		}
-		
-	 	}
-	 	, error : function() {
+			if (data.logoutInfo) {
+				CM.alertMove("로그아웃 하였습니다.", function() {
+					CM.moveToUrl("/");
+			   });
+				
+			} 
+	   
+		}
+	)
 
-	 	}
-	 	, complete: function() {
+
+	// 	$.ajax({
+	//  	url : "/logout"
+	//  	, type : 'post'
+	//  	, headers : {              // Http header
+    //    "Content-Type" : "application/json",
+    //    "X-HTTP-Method-Override" : "POST"
+    //  }
+    //  , dataType : 'json'
+	//  	, success : function (data) {
 		
-	 	}
-	 });
+	//  		if (data.logoutInfo) {
+	// 			CM.alertMove("로그아웃 하였습니다.", function() {
+	// 				window.location.href="/";
+	// 			});
+	 			
+	//  		} 
+		
+	//  	}
+	//  	, error : function() {
+
+	//  	}
+	//  	, complete: function() {
+		
+	//  	}
+	//  });
 	
 }

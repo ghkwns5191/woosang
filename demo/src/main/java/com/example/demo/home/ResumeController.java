@@ -228,5 +228,59 @@ public class ResumeController {
 		}
 		
 	}
-	
+
+
+	// 이력서 수정 화면
+	@RequestMapping(value="/revise/{id}", method=RequestMethod.GET)
+	public String getReviseResumeInfo(HttpServletRequest request, HttpServletResponse response
+								, @PathVariable("id") String id
+								, Model model) {
+		// 로그인되지 않았을 경우는 홈화면으로 이동.
+		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+			view = "/home.html";
+		} else {
+			
+			HttpSession session = request.getSession();
+			Map<String, Object> params = new HashMap<>();
+			params.put("resume_id", id);
+
+			if (this.resumeService.validateResumeId(params, session)) {
+
+				Map<String, Object> resumeInfo = new HashMap<>();
+				resumeInfo.put("id", id);			
+				resumeInfo.put("resume_id", id);			
+				resumeInfo = this.resumeService.getResumeInfo(resumeInfo);
+				model.addAttribute("resumeInfo", resumeInfo);
+				model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+				view = "/resume/revise.html";
+
+			// 로그인 되었으나, 본인의 이력서가 아닌 타인의 이력서를 조회하려는 경우 list 화면으로 이동.
+			} else {
+				model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+				view = "/resume/list.html";
+			}
+		}
+		return view;
+	}
+
+
+	@RequestMapping(value="/revise", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> deleteResume(@RequestBody Map<String, Object> deleteParams, HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+
+		// csrf 검증 로직
+		if (Util.checkCsrf(session, deleteParams)) {
+
+			deleteParams = Util.convertXssScript(deleteParams);
+			this.resumeService.deleteResume(deleteParams);
+
+			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
+		} else {
+
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+		
+	}
 }

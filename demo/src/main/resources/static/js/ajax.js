@@ -1,13 +1,15 @@
 var AJAX = {
-    ajaxData : function(url, method, data, successCallBack, errCallBack) {
+    ajaxData : function(url, method, body, successCallBack, errCallBack) {
         
         $.ajax({
             url : url
-            , data : JSON.stringify(data)
             , type : method
+            , data : JSON.stringify(body)
             , headers : {              // Http header
-                "Content-Type" : "application/json"
-            }
+                "Content-Type" : "application/json",
+                "X-HTTP-Method-Override" : "POST"
+              }
+            , dataType : 'json'
             , success : function (data) {
                 successCallBack(data);
             }
@@ -17,7 +19,7 @@ var AJAX = {
             , complete: function() {
                 
             }
-        })
+        });
     }
 }
 

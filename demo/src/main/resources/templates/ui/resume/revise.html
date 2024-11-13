@@ -2,6 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
+      <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
@@ -13,8 +17,8 @@
 
 
 <body>
-    <div class="container">
-        이력서 상세 화면 입니다.
+    <div class="container-fluid">
+       <!--  이력서 상세 화면 입니다.
         <table class="table">
             <colgroup>
                 <col style="width: 30%"></col>
@@ -83,7 +87,7 @@
                     <th>학력정보</th>
                 </tr>
             </thead>
-            <tbody th:each="list : ${rresumeInfo.academicList}">
+            <tbody th:each="list : ${resumeInfo.academicList}">
                 <tr>
                     <td><label>School Name</label></td>
                     <td><label th:text="${list.school_name}"></label></td>
@@ -113,10 +117,152 @@
                     <td><label th:text="${list.grade}"></label></td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
+
+
+
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label fclass="form-label"><strong>Title</strong></label>
+                  <div class="form-floating mb-3">
+                    <input th:value="${resumeInfo.basicInfo.title}" type="text" class="form-control-plaintext">
+                    <label for="title">Title</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><strong>First Name</strong></label>
+                  <input th:value="${resumeInfo.basicInfo.first_name}" type="text" class="form-control-plaintext" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><strong>Last Name</strong></label>
+                  <input th:value="${resumeInfo.basicInfo.last_name}" type="text" class="form-control-plaintext" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label"><strong>email</strong></label>
+                  <input th:value="${resumeInfo.basicInfo.email}" type="email" class="form-control-plaintext" readonly>
+                </div>
+                <div class="col-md-6 mb-5">
+                  <label class="form-label"><strong>phone</strong></label>
+                  <input th:value="${resumeInfo.basicInfo.phone}" type="text" class="form-control-plaintext" readonly>
+                </div>
+                
+                <div class="row" id="careerAppPoint">
+                    <div class="col-12">
+                    	<label class="form-label companyName"><strong>Career</strong></label>
+                    </div>
+
+
+
+                  <div class="card" th:each="list : ${resumeInfo.careerList}">
+                    <div class="card-body">
+                      <div class="col-md-12">
+                        <label class="form-label companyName"><strong>Company Name</strong></label>
+                        <input type="text" th:value="${list.company_name}" class="form-control" placeholder="Company Name">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label startDate"><strong>Start Date</strong></label>
+                          <input th:value="${list.start_date}" type="date" class="form-control">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label endDate"><strong>End Date</strong></label>
+                          <input  th:value="${list.end_date}" type="date" class="form-control">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label"><strong>Country</strong></label>
+                        <select th:value="${list.country}" class="form-select country">
+                          <option selected>Select Country</option>
+                          <option value="US">United States</option>
+                          <option value="KR">South Korea</option>
+                          <option value="TH">Thailand</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label city"><strong>City</strong></label>
+                          <input th:value="${list.city}" type="text" class="form-control" placeholder="City">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label jobDuty"><strong>Job Duty</strong></label>
+                          <input th:value="${list.job_duty}" type="text" class="form-control" placeholder="Job Duty">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label posi"><strong>Position</strong></label>
+                          <input th:value="${list.posi}" type="text" class="form-control" placeholder="Positioin">
+                      </div>
+                    </div>
+                    </div>
+      
+
+
+                </div>
+                <div class="col-12 mb-3">
+                    <button onclick="addCareer()" class="btn btn-primary">Add Career</button>
+                </div>
+                <div class="row" id="academicAppPoint">
+                  
+                  <div class="col-12">
+                    	<label class="form-label companyName"><strong>Education</strong></label>
+                    </div>
+
+
+
+                  <div class="card" th:each="list : ${resumeInfo.academicList}">
+                    <div class="card-body">
+                      <div class="col-md-12">
+                        <label class="form-label companyName"><strong>School Name</strong></label>
+                        <input type="text" th:value="${list.school_name}" class="form-control" placeholder="Company Name">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label startDate"><strong>Start Date</strong></label>
+                          <input th:value="${list.start_date}" type="date" class="form-control">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label endDate"><strong>End Date</strong></label>
+                          <input  th:value="${list.end_date}" type="date" class="form-control">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label"><strong>Country</strong></label>
+                        <select th:value="${list.country}" class="form-select country">
+                          <option selected>Select Country</option>
+                          <option value="US">United States</option>
+                          <option value="KR">South Korea</option>
+                          <option value="TH">Thailand</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label city"><strong>City</strong></label>
+                          <input th:value="${list.city}" type="text" class="form-control" placeholder="City">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label jobDuty"><strong>Major</strong></label>
+                          <input th:value="${list.major}" type="text" class="form-control" placeholder="Major">
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label"><strong>Grade</strong></label>
+                          <input th:value="${list.grade}" type="text" class="form-control" placeholder="Grade">
+                      </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <button onclick="addAcademic()" class="btn btn-primary">Add Education</button>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <button type="button" onclick="onUpdate()" class="btn btn-primary">Update</button>
+              </div>
+              <div class="col-md-6 mb-3">
+                  <button type="button" onclick="onBack()" class="btn btn-primary">Home</button>
+              </div>
+      
+          </div>
+          <div class="col-md-2"></div>
+          </div>
+
     </div>
-
-
 
 
     <input type="text" th:if="${csrf_token != null}" th:value="${csrf_token}" hidden/>
@@ -124,5 +270,5 @@
 
 <script src="../../../js/ajax.js"></script>
 <script src="../../../js/common.js"></script>
-<script src="../../../js/resumeList.js"></script>
+<script src="../../../js/resumeRevise.js"></script>
 <script src="../../../bootstrap/js/bootstrap.bundle.min.js"></script>

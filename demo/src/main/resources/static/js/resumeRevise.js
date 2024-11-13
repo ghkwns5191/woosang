@@ -6,6 +6,11 @@ var careerCnt = 0;
 var academicCnt = 0;
 
 
+window.onload() = function(){
+	
+}
+
+
 function addCareer() {
 	var tbody = document.getElementById("careerAppPoint");
 	var newarea = document.createElement("div");
