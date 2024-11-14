@@ -75,6 +75,8 @@ public class ResumeService {
 		result.put("basicInfo", basicInfo);
 		result.put("careerList", careerList);
 		result.put("academicList", academicList);
+		result.put("careerLength", careerList.size());
+		result.put("academicLength", academicList.size());
 
 		return result;
 	}

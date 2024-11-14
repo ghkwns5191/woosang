@@ -1,9 +1,7 @@
 /**
  * 
  */
- 
-var careerCnt = 0;
-var academicCnt = 0;
+
 
 
 
@@ -48,12 +46,21 @@ function addCareer() {
     +              '<label class="form-label posi">Positioin</label>'
     +                '<input type="text" class="form-control careerPosi" placeholder="Positioin">'
     +            '</div>'
+	+               '<div class="col-12">'
+	+				'<button onclick="deleteCareer()" class="btn btn-primary">Add Career</button>'
+	+				'</div>'
 	+            '</div>';
 
 	
 	tbody.appendChild(newarea);
 
 	careerCnt++;
+}
+
+
+function deleteCareer(data) {
+	document.getElementById("careerAppPoint").removeChild(data.closest(".card"));
+	careerCnt--;
 }
 
 
@@ -96,13 +103,22 @@ function addAcademic() {
     +              '<label class="form-label">Grade</label>'
     +                '<input type="text" class="form-control academicGrade" placeholder="Grade">'
     +            '</div>'
+	+				'<div class="col-12">'
+	+				'<button onclick="deleteAcademic()" class="btn btn-primary">Add Career</button>'
+	+				'</div>'
 	+            '</div>';
 	tbody.appendChild(newarea);
 
 	academicCnt++;
 }
 
-function onInsert() {
+
+function deleteAcademic(data) {
+	document.getElementById("academicAppPoint").removeChild(data.closest(".card"));
+	academicCnt--;
+}
+
+function onUpdate() {
 	var basicInfo = {
 		title: document.getElementById("title").value,
 		summary: document.getElementById("summary").value
@@ -138,21 +154,22 @@ function onInsert() {
 	}
 
 
-	var inputParams = {
+	var updateParams = {
 		basicInfo: basicInfo,
 		careerList: careerList,
 		academicList: academicList,
 	}
+	var id = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length);
 
 	AJAX.ajaxData(
-		"/resume/insert"
+		"/resume/revise"
 		, "post"
-		, inputParams
+		, updateParams
 		, function(data) {
 			console.log(data);
-			CM.alertMove("신규 입력이 완료되었습니다.",
+			CM.alertMove("수정이 완료되었습니다.",
 				function() {
-					CM.moveToUrl("/resume/list");
+					CM.moveToUrl("/resume/detail/" + id);
 				}
 			);
 			
@@ -164,23 +181,7 @@ function onInsert() {
 }
 
 
-function onToJoin() {
-	CM.moveToUrl("/join");
-}
-
-
-function onToLogin() {
-	CM.moveToUrl("/login");
-}
-
-
 // 뒤로가기(홈화면으로)
 function onBack() {
 	window.history.back();
-}
-
-function onUpdate() {
-	var pathName = window.location.pathname;
-	var id = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length);
-	CM.moveToUrl("/resume/revise/" + id);
 }

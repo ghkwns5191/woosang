@@ -265,7 +265,7 @@ public class ResumeController {
 
 
 	@RequestMapping(value="/revise", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> deleteResume(@RequestBody Map<String, Object> deleteParams, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> reviseResume(@RequestBody Map<String, Object> deleteParams, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
 

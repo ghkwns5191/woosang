@@ -45,12 +45,21 @@ function addCareer() {
     +              '<label class="form-label posi">Positioin</label>'
     +                '<input type="text" class="form-control careerPosi" placeholder="Positioin">'
     +            '</div>'
+	+               '<div class="col-12">'
+	+				'<button onclick="deleteCareer()" class="btn btn-primary">Add Career</button>'
+	+				'</div>'
 	+            '</div>';
 
 	
 	tbody.appendChild(newarea);
 
 	careerCnt++;
+}
+
+
+function deleteCareer(data) {
+	document.getElementById("careerAppPoint").removeChild(data.closest(".card"));
+	careerCnt--;
 }
 
 
@@ -93,11 +102,22 @@ function addAcademic() {
     +              '<label class="form-label">Grade</label>'
     +                '<input type="text" class="form-control academicGrade" placeholder="Grade">'
     +            '</div>'
+	+				'<div class="col-12">'
+	+				'<button onclick="deleteAcademic()" class="btn btn-primary">Add Career</button>'
+	+				'</div>'
 	+            '</div>';
 	tbody.appendChild(newarea);
 
 	academicCnt++;
 }
+
+
+function deleteAcademic(data) {
+	document.getElementById("academicAppPoint").removeChild(data.closest(".card"));
+	academicCnt--;
+}
+
+
 
 function onInsert() {
 	var basicInfo = {

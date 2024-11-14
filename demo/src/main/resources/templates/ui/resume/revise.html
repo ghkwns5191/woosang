@@ -268,6 +268,11 @@
     <input type="text" th:if="${csrf_token != null}" th:value="${csrf_token}" hidden/>
 </body>
 
+<script th:inline="javascript" type="text/javascript">
+  var careerCnt = [[${resumeInfo.careerLength}]];
+  var academicCnt = [[${resumeInfo.academicLength}]];
+</script>
+
 <script src="../../../js/ajax.js"></script>
 <script src="../../../js/common.js"></script>
 <script src="../../../js/resumeRevise.js"></script>
