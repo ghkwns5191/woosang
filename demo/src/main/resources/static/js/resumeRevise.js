@@ -3,8 +3,8 @@
  */
 
 
-
-
+var careerCnt = document.getElementById("careerCnt").value;
+var academicCnt = document.getElementById("academicCnt").value;
 
 
 function addCareer() {

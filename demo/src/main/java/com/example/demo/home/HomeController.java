@@ -70,15 +70,18 @@ public class HomeController {
 	public String home(HttpServletRequest request
 						, HttpServletResponse response
 						, Model model) {
-		HttpSession session = request.getSession();
-		
-		
-		if (session.getAttribute("usr_id") != null) {
-			model.addAttribute("loginFlag", "true");
+
+		// 로그인 여부 화면 반영을 위해
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
 			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 		} else {
-			model.addAttribute("loginFlag", "false");
+			model.addAttribute("loginFlag", loginFlag);
 		}
+
+		model.addAttribute("recruitList", this.homeService.getRepRecruitList());
 		
 		
 		return "/home.html";
@@ -90,6 +93,16 @@ public class HomeController {
 	public String join(HttpServletRequest request
 						, HttpServletResponse response) {
 
+		// 로그인 여부 화면 반영을 위해
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+		} else {
+			model.addAttribute("loginFlag", loginFlag);
+		}
+
 		return "/join.html";
 	}
 	
@@ -98,6 +111,7 @@ public class HomeController {
 	public ResponseEntity<Map<String, Object>> join(HttpServletRequest request
 						, HttpServletResponse response
 						, @RequestBody Map<String, Object> joinInfo) {
+							
 		Map<String, Object> result = this.homeService.join(request, response, joinInfo);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
@@ -113,6 +127,17 @@ public class HomeController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request
 						, HttpServletResponse response) {
+
+		// 로그인 여부 화면 반영을 위해
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+		} else {
+			model.addAttribute("loginFlag", loginFlag);
+		}
+
 		return "/login.html";
 	}
 

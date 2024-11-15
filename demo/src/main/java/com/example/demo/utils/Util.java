@@ -16,6 +16,32 @@ public class Util {
 		
 		return str.trim();
 	}
+
+
+    public static String objectToString(Object obj) {
+        String result = "";
+        if (obj != null) {
+            result = (String) obj;
+            result = result.trim();
+        }
+        return result;
+    }
+
+    public static int objectToInteger(Object obj) {
+        int result = 0;
+        if (obj != null) {
+            result = Integer.parseInt(objectToString(obj));
+        }
+        return result;
+    }
+
+    public static double objectToDouble(Object obj) {
+        double result = 0;
+        if (obj != null) {
+            result = Double.parseInt(objectToString(obj));
+        }
+        return result;
+    }
 	
 	
 	public static String mapToString(Map<String, Object> map, String param) {
@@ -64,6 +90,8 @@ public class Util {
 
         }
     }
+
+    
 
  
 
@@ -182,6 +210,17 @@ public class Util {
             list.set(i, data);
         }
         return list;
+    }
+
+
+    public static boolean getLoginFlag(HttpSession session) {
+        boolean result = false;
+        if (isNullOrEmpty(getSessionString(session, "usr_id"))) {
+            result = false;
+        } else {
+            result = true;
+        }
+        return result;
     }
 
 }

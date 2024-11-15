@@ -103,13 +103,17 @@ public class ResumeController {
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
 									, Model model){
-		String view = "";
-		HttpSession session = request.getSession();
 
+		// 로그인 여부 화면 반영을 위해
 		// 로그인되지 않았을 경우는 홈화면으로 이동.
-		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 			view = "/home.html";
 		} else {
+			model.addAttribute("loginFlag", loginFlag);
 			List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
 			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 			model.addAttribute("resumeList", resumeList);
@@ -124,13 +128,17 @@ public class ResumeController {
 	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
 								, @PathVariable("id") String id
 								, Model model) {
-		
+		String view = "";
 		// 로그인되지 않았을 경우는 홈화면으로 이동.
-		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+		HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (!loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 			view = "/home.html";
 		} else {
-			
-			HttpSession session = request.getSession();
+			model.addAttribute("loginFlag", loginFlag);
+			session = request.getSession();
 			Map<String, Object> params = new HashMap<>();
 			params.put("resume_id", id);
 
@@ -158,10 +166,25 @@ public class ResumeController {
 	@RequestMapping(value="/detail/new", method=RequestMethod.GET)
 	public String getResumeInfo(HttpServletRequest request, HttpServletResponse response
 								, Model model) {
-		Map<String, Object> usrData = this.resumeService.getUsrDataforNewResume(request, response);
-		model.addAttribute("usrInfo", usrData);
-		model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
-		return "/resume/new.html";
+		String view = "";
+		// 로그인 여부 화면 반영을 위해
+		// 로그인되지 않았을 경우는 홈화면으로 이동.
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (!loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			Map<String, Object> usrData = this.resumeService.getUsrDataforNewResume(request, response);
+			model.addAttribute("usrInfo", usrData);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			view = "/resume/new.html";
+		} else {
+			model.addAttribute("loginFlag", loginFlag);
+			List<Map<String, Object>> resumeList = this.resumeService.getResumeListByUser(request, response);	
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			model.addAttribute("resumeList", resumeList);
+			view = "/resume/list.html";
+		}
+		return view;
 	}
 
 
@@ -235,15 +258,21 @@ public class ResumeController {
 	public String getReviseResumeInfo(HttpServletRequest request, HttpServletResponse response
 								, @PathVariable("id") String id
 								, Model model) {
+		String view = "";
+		// 로그인 여부 화면 반영을 위해
 		// 로그인되지 않았을 경우는 홈화면으로 이동.
-		if (Util.isNullOrEmpty(Utils.getSessionString(session, "usr_id").toString())) {
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
 			view = "/home.html";
 		} else {
 			
-			HttpSession session = request.getSession();
+			session = request.getSession();
 			Map<String, Object> params = new HashMap<>();
 			params.put("resume_id", id);
-
+			model.addAttribute("loginFlag", loginFlag);
 			if (this.resumeService.validateResumeId(params, session)) {
 
 				Map<String, Object> resumeInfo = new HashMap<>();
@@ -265,15 +294,15 @@ public class ResumeController {
 
 
 	@RequestMapping(value="/revise", method=RequestMethod.POST)
-	public ResponseEntity<Map<String, Object>> reviseResume(@RequestBody Map<String, Object> deleteParams, HttpServletRequest request) {
+	public ResponseEntity<Map<String, Object>> reviseResume(@RequestBody Map<String, Object> updateParams, HttpServletRequest request) {
 
 		HttpSession session = request.getSession();
 
 		// csrf 검증 로직
-		if (Util.checkCsrf(session, deleteParams)) {
+		if (Util.checkCsrf(session, updateParams)) {
 
-			deleteParams = Util.convertXssScript(deleteParams);
-			this.resumeService.deleteResume(deleteParams);
+			deleteParams = Util.convertXssScript(updateParams);
+			this.resumeService.updateResume(updateParams);
 
 			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
 		} else {

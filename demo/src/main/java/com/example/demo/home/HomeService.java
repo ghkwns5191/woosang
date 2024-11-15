@@ -143,4 +143,10 @@ public class HomeService {
 		
 		return result;
 	}
+
+
+
+	public List<Map<String, Object>> getRepRecruitList() {
+		return sqlSession.selectList(NAMESPACE + "getRepRecruitList");
+	}
 }

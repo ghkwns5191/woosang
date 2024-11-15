@@ -264,14 +264,11 @@
 
     </div>
 
-
+    <input id="careerCnt" type="text" th:if="$${resumeInfo.careerLength != null}" th:value="${resumeInfo.careerLength}" hidden />
+    <input id="academicCnt" type="text" th:if="$${resumeInfo.academicLength != null}" th:value="${resumeInfo.academicLength}" hidden />
     <input type="text" th:if="${csrf_token != null}" th:value="${csrf_token}" hidden/>
 </body>
 
-<script th:inline="javascript" type="text/javascript">
-  var careerCnt = [[${resumeInfo.careerLength}]];
-  var academicCnt = [[${resumeInfo.academicLength}]];
-</script>
 
 <script src="../../../js/ajax.js"></script>
 <script src="../../../js/common.js"></script>

@@ -56,4 +56,21 @@
 	WHERE USERNAME = #{username}
 	</select>
 
+
+
+	<select id="getRepRecruitList" resultType="map">
+	/* home.getRepRecruitList : 홈화면용 대표 10개 공고 출력 (최신순) */
+	SELECT
+		ROW_NUMBER()
+		, *
+	FROM (
+		SELECT
+			*
+			, REG_DATE
+		FROM RECRUIT
+		ORDER BY REG_DATE DESC
+	)
+	WHERE ROW_NUMBER() <![CDATA[<=]]> 10
+	</select>
+
 </mapper>
