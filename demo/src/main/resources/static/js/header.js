@@ -1,4 +1,4 @@
 function toHome() {
-	CM.moveToUrl("/n");
+	CM.moveToUrl("/");
 }
 

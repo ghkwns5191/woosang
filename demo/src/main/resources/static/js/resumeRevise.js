@@ -121,7 +121,7 @@ function deleteAcademic(data) {
 function onUpdate() {
 	var basicInfo = {
 		title: document.getElementById("title").value,
-		summary: document.getElementById("summary").value
+		/*summary: document.getElementById("summary").value*/
 	}
 	
 	var careerList = [];
@@ -152,14 +152,17 @@ function onUpdate() {
 		}
 		academicList.push(academicInfo);
 	}
-
-
+	
+	
+	var pathName = window.location.pathname;
+	var id = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length);
 	var updateParams = {
 		basicInfo: basicInfo,
 		careerList: careerList,
 		academicList: academicList,
+		id: id
 	}
-	var id = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length);
+	
 
 	AJAX.ajaxData(
 		"/resume/revise"

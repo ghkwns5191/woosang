@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jcp.xml.dsig.internal.dom.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import com.example.demo.utils.Util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/resume")
@@ -103,12 +103,13 @@ public class ResumeController {
 	public String getResumeListByUser(HttpServletRequest request
 									, HttpServletResponse response
 									, Model model){
-
+		String view = "";
 		// 로그인 여부 화면 반영을 위해
 		// 로그인되지 않았을 경우는 홈화면으로 이동.
 	    HttpSession session = request.getSession();
 		boolean loginFlag = Util.getLoginFlag(session);
-		if (loginFlag) {
+		System.out.println(loginFlag);
+		if (!loginFlag) {
 			model.addAttribute("loginFlag", loginFlag);
 			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
 			view = "/home.html";
@@ -264,7 +265,7 @@ public class ResumeController {
 	    HttpSession session = request.getSession();
 		boolean loginFlag = Util.getLoginFlag(session);
 		
-		if (loginFlag) {
+		if (!loginFlag) {
 			model.addAttribute("loginFlag", loginFlag);
 			view = "/home.html";
 		} else {
@@ -298,18 +299,10 @@ public class ResumeController {
 
 		HttpSession session = request.getSession();
 
-		// csrf 검증 로직
-		if (Util.checkCsrf(session, updateParams)) {
 
-			deleteParams = Util.convertXssScript(updateParams);
 			this.resumeService.updateResume(updateParams);
 
 			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
-		} else {
-
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
 		
 	}
 }

@@ -145,7 +145,7 @@ public class Util {
     public static int objectToInteger(Object obj) {
         int result = 0;
         if (obj != null) {
-            result = Integer.parseInt(objectToString(obj));
+            result = Integer.valueOf(objectToString(obj));
         }
         return result;
     }
@@ -153,7 +153,7 @@ public class Util {
     public static double objectToDouble(Object obj) {
         double result = 0;
         if (obj != null) {
-            result = Double.parseInt(objectToString(obj));
+            result = Double.valueOf(objectToString(obj));
         }
         return result;
     }
@@ -190,7 +190,7 @@ public class Util {
 
  
 
-    public static List<Map<String, Object>> convertKeysToLowerCase(List<Map<String, Object>> originalList) {
+    public static List<Map<String, Object>> convertKeysToLowerCaseList(List<Map<String, Object>> originalList) {
 
         if (originalList.size() > 0) {
             for (int i = 0; i < originalList.size(); i++) {
@@ -274,7 +274,7 @@ public class Util {
 
     public static boolean isNullOrEmpty(String str) {
         boolean result = false;
-        if (str.equals("") || str == null) {
+        if (str == null || str.equals("")) {
             result = true;
         } else {
             result = false;
@@ -287,8 +287,8 @@ public class Util {
     public static boolean checkCsrf(HttpSession session, Map<String, Object> param) {
         boolean result = false;
         param = convertKeysToLowerCase(param);
-        String csrf_token = mapToString(param, "csrf_token");
-        String csrf_token_server = getSessionString(session, "csrf_token");
+        String csrf_token = objectToString(mapToString(param, "csrf_token"));
+        String csrf_token_server = objectToString(getSessionString(session, "csrf_token"));
 
         if (csrf_token.equals(csrf_token_server)) {
             result = true;
@@ -304,12 +304,11 @@ public class Util {
 
         for (Map.Entry<String, Object> entry : map.entrySet()) {
             if (entry.getValue().getClass().getName().equals("java.lang.String")) {
-                entry.getValue().replaceAll("<", "&lt;");
-                entry.getValue().replaceAll(">", "&gt;");
-                entry.getValue().replaceAll(",", "&quot;");
-                entry.getValue().replaceAll('"', "&#x27;");
-                entry.getValue().replaceAll("(", "&#40;");
-                entry.getValue().replaceAll(")", "&#41;");
+                ((String) entry.getValue()).replaceAll("<", "&lt;");
+                ((String) entry.getValue()).replaceAll(">", "&gt;");
+                ((String) entry.getValue()).replaceAll(",", "&quot;");
+                ((String) entry.getValue()).replaceAll("(", "&#40;");
+                ((String) entry.getValue()).replaceAll(")", "&#41;");
             }
             map.put(entry.getKey().toLowerCase(), entry.getValue());
         }

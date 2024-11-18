@@ -82,7 +82,7 @@ public class HomeController {
 		}
 
 		model.addAttribute("recruitList", this.homeService.getRepRecruitList());
-		
+		model.addAttribute("usr_nm", Util.getSessionString(session, "username"));
 		
 		return "/home.html";
 	}
@@ -91,7 +91,8 @@ public class HomeController {
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(HttpServletRequest request
-						, HttpServletResponse response) {
+						, HttpServletResponse response
+						, Model model) {
 		String view = "";					
 		// 로그인 여부 화면 반영을 위해
 	    HttpSession session = request.getSession();
@@ -111,8 +112,9 @@ public class HomeController {
 
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/join/user", method=RequestMethod.GET)
-	public String join(HttpServletRequest request
-						, HttpServletResponse response) {
+	public String joinUser(HttpServletRequest request
+						, HttpServletResponse response
+						, Model model) {
 		String view = "";					
 		// 로그인 여부 화면 반영을 위해
 	    HttpSession session = request.getSession();
@@ -131,8 +133,9 @@ public class HomeController {
 
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/join/comp", method=RequestMethod.GET)
-	public String join2(HttpServletRequest request
-						, HttpServletResponse response) {
+	public String joinComp(HttpServletRequest request
+						, HttpServletResponse response
+						, Model model) {
 		String view = "";					
 		// 로그인 여부 화면 반영을 위해
 	    HttpSession session = request.getSession();
@@ -179,7 +182,8 @@ public class HomeController {
 	// 로그인 화면으로 이동.
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request
-						, HttpServletResponse response) {
+						, HttpServletResponse response
+						, Model model) {
 
 		// 로그인 여부 화면 반영을 위해
 	    HttpSession session = request.getSession();

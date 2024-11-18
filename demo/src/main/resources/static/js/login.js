@@ -15,11 +15,11 @@ function onLogin() {
 		, "post"
 		, loginInfo
 		, function(data) {
-			if (data == "success") {
+			if (data.loginFlag) {
 				CM.alertMove("로그인에 성공하였습니다.", function() {
 					window.location.href="/";
 				});
-			} else if (data == "fail") {
+			} else {
 				CM.alertMove("아이디 혹은 비밀번호가 잘못되었습니다.", function() {
 					document.getElementById("username").value = "";
 					document.getElementById("password").value = "";

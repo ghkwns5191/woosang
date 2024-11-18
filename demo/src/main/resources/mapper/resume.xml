@@ -220,7 +220,7 @@
 		, #{country}
 		, #{city}
 		, #{major}
-		, #{grade}
+		, IF(#{grade} = '', 0, #{grade})
 		, SYSDATE()
 	)
 	</insert>
@@ -231,7 +231,7 @@
 	UPDATE RESUME SET
 		TITLE = #{title}
 		, SUMMARY = #{summary}
-		, REMARI = #{remark}
+		, REMARK = #{remark}
 		, MOD_DATE = SYSDATE()
 	WHERE ID = #{id}
 	AND USR_ID = #{usr_id}
@@ -309,9 +309,8 @@
 	</delete>
 
 
-
 	<select id="validateResumeId" resultType="map">
-	/* resume.deleteCareerList : 이력서 학력정보를 delete */
+	/* resume.validateResumeId : 이력서 학력정보를 delete */
 	SELECT
 		USR_ID
 	FROM RESUME

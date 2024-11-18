@@ -199,5 +199,6 @@ function onBack() {
 function onUpdate() {
 	var pathName = window.location.pathname;
 	var id = pathName.substring(pathName.lastIndexOf("/") + 1, pathName.length);
+	console.log(id);
 	CM.moveToUrl("/resume/revise/" + id);
 }

@@ -75,6 +75,7 @@ public class HomeService {
 					session = request.getSession(true);
 					
 					Util.setSessionAttribute(session, "usr_id", usr_id);
+					Util.setSessionAttribute(session, "username", username);
 					Util.setSessionAttribute(session, "csrf_token", UUID.randomUUID().toString());
 				} else {
 					
@@ -124,7 +125,7 @@ public class HomeService {
 		
 		joinInfo.put("password", password);
 		List<Map<String, Object>> usernameData = sql.selectList(NAMESPACE + "checkUsername", joinInfo);
-		usernameData = Util.convertKeysToLowerCase(usernameData);
+		usernameData = Util.convertKeysToLowerCaseList(usernameData);
 		
 		if (usernameData.size() > 0) {
 			joinFlag = false;
@@ -159,7 +160,7 @@ public class HomeService {
 		compInfo.put("id", UUID.randomUUID().toString());
 		compInfo.put("usr_id", Util.mapToString(joinResult, "usr_id"));
 
-		sqlSession.insert(NAMESPACE + "insertNewCompany", compInfo);
+		sql.insert(NAMESPACE + "insertNewCompany", compInfo);
 
 		result.put("comp_id", Util.mapToString(compInfo, "usr_id"));
 		result.put("usr_id", Util.mapToString(compInfo, "usr_id"));
@@ -169,6 +170,6 @@ public class HomeService {
 
 
 	public List<Map<String, Object>> getRepRecruitList() {
-		return sqlSession.selectList(NAMESPACE + "getRepRecruitList");
+		return sql.selectList(NAMESPACE + "getRepRecruitList");
 	}
 }

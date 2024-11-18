@@ -69,8 +69,8 @@ public class ResumeService {
 		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
 		
 		basicInfo = Util.convertKeysToLowerCase(basicInfo);
-		careerList = Util.convertKeysToLowerCase(careerList);
-		academicList = Util.convertKeysToLowerCase(academicList);
+		careerList = Util.convertKeysToLowerCaseList(careerList);
+		academicList = Util.convertKeysToLowerCaseList(academicList);
 
 		result.put("basicInfo", basicInfo);
 		result.put("careerList", careerList);
@@ -88,8 +88,8 @@ public class ResumeService {
 		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
 
 		basicInfo = Util.convertKeysToLowerCase(basicInfo);
-		careerList = Util.convertKeysToLowerCase(careerList);
-		academicList = Util.convertKeysToLowerCase(academicList);
+		careerList = Util.convertKeysToLowerCaseList(careerList);
+		academicList = Util.convertKeysToLowerCaseList(academicList);
 
 		// 이력서 기본정보(header)
 		String id = UUID.randomUUID().toString();
@@ -130,6 +130,7 @@ public class ResumeService {
 		Map<String, Object> basicInfo = (Map<String, Object>) updateParams.get("basicInfo");
 		List<Map<String, Object>> careerList = (List<Map<String, Object>>) updateParams.get("careerList");
 		List<Map<String, Object>> academicList = (List<Map<String, Object>>) updateParams.get("academicList");
+		String resume_id = (String) updateParams.get("id");
 
 		List<Map<String, Object>> old_careerList = sqlSession.selectList(NAMESPACE + "getCareerList", basicInfo);
 		List<Map<String, Object>> old_academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", basicInfo);
@@ -151,7 +152,8 @@ public class ResumeService {
 		if (newCareerSize == oldCareerSize) {
 
 			for (Map<String, Object> data : careerList) {
-			sqlSession.update(NAMESPACE + "updateCareerInfo", data);
+				data.put("resume_id", resume_id);
+				sqlSession.update(NAMESPACE + "updateCareerInfo", data);
 			}
 
 		} else if (newCareerSize > oldCareerSize) {
@@ -159,12 +161,15 @@ public class ResumeService {
 			for (int i = 0; i < oldCareerSize; i++) {
 				// update
 				Map<String, Object> data = careerList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.update(NAMESPACE + "updateCareerInfo", data);
 			}
 
 			for (int i = oldCareerSize; i < newCareerSize; i++) {
 				// insert
 				Map<String, Object> data = careerList.get(i);
+				data.put("id", UUID.randomUUID().toString());
+				data.put("resume_id", resume_id);
 				sqlSession.insert(NAMESPACE + "insertCareerInfo", data);
 			}
 
@@ -174,12 +179,14 @@ public class ResumeService {
 			for (int i = 0; i < newCareerSize; i++) {
 				// update
 				Map<String, Object> data = careerList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.update(NAMESPACE + "updateCareerInfo", data);
 			}
 
 			for (int i = newCareerSize; i < oldCareerSize; i++) {
 				// delete
 				Map<String, Object> data = old_careerList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.delete(NAMESPACE + "deleteCareerInfo", data);
 			}
 
@@ -190,6 +197,7 @@ public class ResumeService {
 		if (newAcademicSize == oldAcademicSize) {
 
 			for (Map<String, Object> data : academicList) {
+				data.put("resume_id", resume_id);
 				sqlSession.update(NAMESPACE + "updateAcademicInfo", data);
 			}
 
@@ -198,12 +206,15 @@ public class ResumeService {
 			for (int i = 0; i < oldCareerSize; i++) {
 				// update
 				Map<String, Object> data = academicList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.update(NAMESPACE + "updateAcademicInfo", data);
 			}
 
 			for (int i = oldAcademicSize; i < newAcademicSize; i++) {
 				// insert
 				Map<String, Object> data = academicList.get(i);
+				data.put("id", UUID.randomUUID().toString());
+				data.put("resume_id", resume_id);
 				sqlSession.insert(NAMESPACE + "insertAcademicInfo", data);
 			}
 
@@ -212,12 +223,14 @@ public class ResumeService {
 			for (int i = 0; i < newCareerSize; i++) {
 				// update
 				Map<String, Object> data = academicList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.update(NAMESPACE + "updateAcademicInfo", data);
 			}
 
 			for (int i = newAcademicSize; i < oldAcademicSize; i++) {
 				// delete
 				Map<String, Object> data = old_academicList.get(i);
+				data.put("resume_id", resume_id);
 				sqlSession.delete(NAMESPACE + "deleteAcademicInfo", data);
 			}
 			
