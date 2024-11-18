@@ -15,7 +15,7 @@
 	
 	
 	<insert id="insertNewUser">
-	/* home.insertNewUser : 신규 회원 정보 저장 */
+	/* home.insertNewUser : 신규 회원 정보 저장(개인 회원) */
 	INSERT INTO USR
 	(
 		ID
@@ -42,6 +42,58 @@
 		, #{nationality}
 		, SYSDATE()
 		, 'USER'
+	)
+	</insert>
+
+
+	<insert id="insertNewUser2">
+	/* home.insertNewUser2 : 신규 회원 정보 저장(기업 회원) */
+	INSERT INTO USR
+	(
+		ID
+		, USERNAME
+		, PASSWORD
+		, FIRST_NAME
+		, MIDDLE_NAME
+		, LAST_NAME
+		, PHONE
+		, EMAIL
+		, NATIONALITY
+		, REG_DATE
+		, ROLE_V
+	) VALUES
+	(
+		#{id}
+		, #{username}
+		, #{password}
+		, #{first_name}
+		, #{middle_name}
+		, #{last_name}
+		, #{phone}
+		, #{email}
+		, #{nationality}
+		, SYSDATE()
+		, 'COMP'
+	)
+	</insert>
+
+
+	<insert id="insertNewCompany">
+	/* home.insertNewCompany : 신규 기업정보 저장 */
+	INSERT INTO COMPANY
+	(
+		ID
+		, COMPNAY_NAME
+		, USR_ID
+		, WEBSITE
+		, CEO
+	) VALUES
+	(
+		#{id}
+		, #{company_name}
+		, #{usr_id}
+		, #{website}
+		, #{ceo}
 	)
 	</insert>
 	

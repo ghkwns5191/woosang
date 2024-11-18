@@ -66,7 +66,7 @@ function onLogin() {
 }
 
 
-// 회원가입
+// 개인회원가입
 function onJoin() {
 	var joinInfo = {
 		username : document.getElementById("username").value
@@ -82,6 +82,56 @@ function onJoin() {
 	// url, method, data, 성공 callback, 에러 callback
 	AJAX.ajaxData(
 		"/join"
+		, "post"
+		, joinInfo
+		, function(data) {
+			console.log(data);
+			if (data == "success") {
+				CM.alertMove("회원가입이 완료되었습니다. \n로그인 후 이용하세요.", function() {
+					CM.moveToUrl("/login");
+				});
+				
+			} else if (data == "fail") {
+				CM.alertMove("아이디가 중복 되었습니다.", function() {
+					document.getElementById("username1").value = "";
+					document.getElementById("password1").value = "";
+				})
+				
+			}
+		}
+		, function(err) {
+			console.log(err);
+		}
+	);
+}
+
+// 기업회원가입
+function onJoin2() {
+	var basicInfo = {
+		username : document.getElementById("username").value
+		, password : document.getElementById("password").value
+		, first_name : document.getElementById("firstName").value
+		, middle_name : document.getElementById("middleName").value
+		, last_name : document.getElementById("lastName").value
+		, phone : document.getElementById("phone").value
+		, email : document.getElementById("email").value
+		, nationality : document.getElementById("nationality").value
+	}
+
+	var compInfo = {
+		company_name : document.getElementById("companyName").value
+		, ceo : document.getElementById("ceo").value
+		, website : document.getElementById("website").value
+	}
+
+	var joinInfo = {
+		basicInfo : basicInfo
+		, compInfo : compInfo
+	}
+
+	// url, method, data, 성공 callback, 에러 callback
+	AJAX.ajaxData(
+		"/join2"
 		, "post"
 		, joinInfo
 		, function(data) {
@@ -149,4 +199,13 @@ function onToLogin() {
 // 뒤로가기(홈화면으로)
 function onBack() {
 	CM.moveToUrl("/");
+}
+
+
+function onJoinInd() {
+	CM.moveToUrl("/join/user");
+}
+
+function onJoinComp() {
+	CM.moveToUrl("/join2/comp");
 }

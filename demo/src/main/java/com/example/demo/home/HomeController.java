@@ -86,24 +86,67 @@ public class HomeController {
 		
 		return "/home.html";
 	}
-	
+
 
 	// 회원가입 화면으로 이동.
 	@RequestMapping(value="/join", method=RequestMethod.GET)
 	public String join(HttpServletRequest request
 						, HttpServletResponse response) {
-
+		String view = "";					
 		// 로그인 여부 화면 반영을 위해
 	    HttpSession session = request.getSession();
 		boolean loginFlag = Util.getLoginFlag(session);
 		if (loginFlag) {
 			model.addAttribute("loginFlag", loginFlag);
 			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			view = "/home.html";
 		} else {
 			model.addAttribute("loginFlag", loginFlag);
+			view = "/preJoin.html";
 		}
 
-		return "/join.html";
+		return view;
+	}
+	
+
+	// 회원가입 화면으로 이동.
+	@RequestMapping(value="/join/user", method=RequestMethod.GET)
+	public String join(HttpServletRequest request
+						, HttpServletResponse response) {
+		String view = "";					
+		// 로그인 여부 화면 반영을 위해
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			view = "/home.html";
+		} else {
+			model.addAttribute("loginFlag", loginFlag);
+			view = "/join.html";
+		}
+
+		return view;
+	}
+
+	// 회원가입 화면으로 이동.
+	@RequestMapping(value="/join/comp", method=RequestMethod.GET)
+	public String join2(HttpServletRequest request
+						, HttpServletResponse response) {
+		String view = "";					
+		// 로그인 여부 화면 반영을 위해
+	    HttpSession session = request.getSession();
+		boolean loginFlag = Util.getLoginFlag(session);
+		if (loginFlag) {
+			model.addAttribute("loginFlag", loginFlag);
+			model.addAttribute("csrf_token", Util.getSessionString(session, "csrf_token"));
+			view = "/home.html";
+		} else {
+			model.addAttribute("loginFlag", loginFlag);
+			view = "/join2.html";
+		}
+
+		return view;
 	}
 	
 	// 실제 회원가입 로직 호출.
@@ -113,6 +156,16 @@ public class HomeController {
 						, @RequestBody Map<String, Object> joinInfo) {
 							
 		Map<String, Object> result = this.homeService.join(request, response, joinInfo);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	// 실제 회원가입 로직 호출.
+	@RequestMapping(value="/join2", method=RequestMethod.POST)
+	public ResponseEntity<Map<String, Object>> join2(HttpServletRequest request
+						, HttpServletResponse response
+						, @RequestBody Map<String, Object> joinInfo) {
+							
+		Map<String, Object> result = this.homeService.join2(request, response, joinInfo);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 

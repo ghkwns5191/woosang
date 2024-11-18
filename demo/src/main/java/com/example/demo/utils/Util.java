@@ -8,6 +8,121 @@ import java.util.Map;
 import jakarta.servlet.http.HttpSession;
 
 public class Util {
+
+
+    /*
+     * 1) StringUtil
+     * parameter : String
+     * 매개변수가 null 일 경우 "" 반환.
+     */
+
+     /*
+     * 2) objectToString
+     * parameter : Object
+     * 매개변수를 String 형태로 cast 하여 반환.
+     */
+
+     /*
+     * 3) objectToInteger
+     * parameter : Object
+     * 매개변수를 Integer 형태로 cast 하여 반환.
+     */
+
+     /*
+     * 4) objectToDouble
+     * parameter : Object
+     * 매개변수를 Double 형태로 cast 하여 반환.
+     */
+
+     /*
+     * 5) mapToString
+     * parameter : Map<String, Object>, String
+     * 매개 변수의 key 값의 데이터를 String 으로 cast 하여 반환.
+     */
+
+    /*
+     * 6) mapValidate
+     * parameter : Map<String, Object>
+     * 매개변수로 받은 Map 데이터의 null 체크, null 이면 new HashMap<>() 반환.
+     */
+
+     /*
+     * 7) convertKeysToLowerCase
+     * parameter : Map<String, Object>
+     * 매개변수로 받은 Map 데이터의 key 를 모두 소문자로 변환.
+     */
+
+     /*
+     * 8) convertKeysToLowerCase
+     * parameter : List<Map<String, Object>>
+     * 매개변수로 받은 List<Map> 데이터 내 모든 Map의 key 를 모두 소문자로 변환.
+     */
+
+    /*
+     * 9) convertKeysToLowerCase
+     * parameter : List<Map<String, Object>>
+     * 매개변수로 받은 List<Map> 데이터 내 모든 Map의 key 를 모두 소문자로 변환.
+     */
+
+     /*
+     * 10) setSessionAttribute
+     * parameter : HttpSession, String, Object
+     * 세션 Attribute 설정
+     */
+
+     /*
+     * 11) getSessionString
+     * parameter : HttpSession, String
+     * 설정된 Session 값을 String 으로 cast 하여 반환.
+     */
+
+     /*
+     * 12) getSessionMap
+     * parameter : HttpSession, String
+     * 설정된 Session 값을 Map 으로 cast 하여 반환.
+     */
+
+     /*
+     * 13) getSessionListMap
+     * parameter : HttpSession, String
+     * 설정된 Session 값을 List<Map> 으로 cast 하여 반환.
+     */
+
+     /*
+     * 14) getLoginInfo
+     * parameter : HttpSession
+     * 세션 내 Attribute 체크하여 로그인 여부 확인 (로그인되어 있다면 : true / 로그인이 X 인 경우 : false)
+     */
+
+     /*
+     * 15) isNullOrEmpty
+     * parameter : String
+     * String 이 null 혹은 "" 이라면 true, 값이 있다면 false 반환.
+     */
+
+     /*
+     * 16) checkCsrf
+     * parameter : HttpSession, Map
+     * 요청으로 받은 csrf 토큰 값과 서버 내 지정된 csrf 토큰 값 비교 (문제없으면 true, 다르면 false)
+     */
+
+     /*
+     * 17) convertXssScript
+     * parameter : Map
+     * Map 으로 요청받은 data 내 악성 script 제거
+     */
+
+     /*
+     * 18) convertXssScript
+     * parameter : List<Map>
+     * List<Map> 으로 요청받은 data 내 악성 script 제거
+     */
+
+     /*
+     * 19) getLoginFlag
+     * parameter : HttpSession
+     * 로그인 여부 체크 (로그인 완료 : true, 로그인 X : false)
+     */
 	
 	public static String stringUtil(String str) {
 		if (str.trim() == "" || str.trim() == null) {

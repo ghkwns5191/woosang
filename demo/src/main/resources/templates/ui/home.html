@@ -16,7 +16,14 @@
     <div class="container-fluid">
         <div id="header"></div>
         <div class="row">
-            <div class="col-md-3"></div>
+            <div class="col-md-3">
+                <nav class="nav flex-column">
+                    <a class="nav-link active" aria-current="page" href="#">Active</a>
+                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                </nav>
+            </div>
             <div class="col-md-6">
                 본문 입니다.
                 <table class="table">
@@ -27,9 +34,14 @@
                             <th>업체명</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody th:if="${recruitList != null}" th:each="list : ${recruitList}">
                         <tr>
-                            <td th:text=""></td>
+                            <td th:text="공고 위치"></td>
+                        </tr>
+                    </tbody>
+                    <tbody th:if="${recruitList == null}">
+                        <tr>
+                            <td>아직 등록된 공고가 없습니다.</td>
                         </tr>
                     </tbody>
                 </table>

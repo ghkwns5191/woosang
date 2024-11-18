@@ -138,9 +138,31 @@ public class HomeService {
 		}
 		
 		result.put("username", Util.mapToString(joinInfo, "username"));
+		result.put("usr_id", Util.mapToString(joinInfo, "id"));
 		result.put("joinFlag", joinFlag);
 		
 		
+		return result;
+	}
+
+
+	/*
+	 * 회원가입 메서드 (반환 값은 true or false)
+	 * 회원가입 처리 후 true 는 성공, false 는 실패
+	 */
+	public Map<String, Object> join2(HttpServletRequest request, HttpServletResponse response, Map<String, Object> joinInfo) {
+		Map<String, Object> basicInfo = (Map<String, Object>) joinInfo.get("basicInfo");
+		Map<String, Object> compInfo = (Map<String, Object>) joinInfo.get("compInfo");
+		Map<String, Object> result = new HashMap<>();
+		
+		Map<String, Object> joinResult = this.join(request, response, basicInfo);
+		compInfo.put("id", UUID.randomUUID().toString());
+		compInfo.put("usr_id", Util.mapToString(joinResult, "usr_id"));
+
+		sqlSession.insert(NAMESPACE + "insertNewCompany", compInfo);
+
+		result.put("comp_id", Util.mapToString(compInfo, "usr_id"));
+		result.put("usr_id", Util.mapToString(compInfo, "usr_id"));
 		return result;
 	}
 
