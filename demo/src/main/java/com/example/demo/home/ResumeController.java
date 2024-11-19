@@ -196,18 +196,9 @@ public class ResumeController {
 		HttpSession session = request.getSession();
 
 
-		// csrf 검증 로직
-		if (Util.checkCsrf(session, inputParams)) {
-
-			inputParams = Util.convertXssScript(inputParams);
 			this.resumeService.inputResume(inputParams, request);
 			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
 
-		} else {
-
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
 		
 	}
 	
@@ -217,18 +208,9 @@ public class ResumeController {
 
 		HttpSession session = request.getSession();
 
-		// csrf 검증 로직
-		if (Util.checkCsrf(session, updateParams)) {
-
-			updateParams = Util.convertXssScript(updateParams);
 			this.resumeService.updateResume(updateParams);
 			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
 
-		} else {
-
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
 		
 	}
 
@@ -238,18 +220,10 @@ public class ResumeController {
 
 		HttpSession session = request.getSession();
 
-		// csrf 검증 로직
-		if (Util.checkCsrf(session, deleteParams)) {
+		
+		this.resumeService.deleteResume(deleteParams);
 
-			deleteParams = Util.convertXssScript(deleteParams);
-			this.resumeService.deleteResume(deleteParams);
-
-			return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
-		} else {
-
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
-		}
+		return new ResponseEntity<>(new HashMap<>(), HttpStatus.OK);
 		
 	}
 
