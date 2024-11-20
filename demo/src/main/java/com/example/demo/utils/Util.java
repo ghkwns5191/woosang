@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -335,6 +336,77 @@ public class Util {
             result = true;
         }
         return result;
+    }
+
+
+
+    public static void updateListMapResume(
+        List<Map<String, Object>> newList
+        , List<Map<String, Object>> oldList
+        , String queryTag
+    ) {
+		int newSize = newList.size();
+		int oldSize = oldList.size();
+
+        if (newSize > 0 && oldSize > 0) {
+			// 경력정보
+			if (newSize == oldSize) {
+
+				for (int i = 0; i < newSize; i++) {
+					Map<String, Object> data = newList.get(i);
+					data.put("resume_id", resume_id);
+					data.put("id", Util.objectToString(oldList.get(i).get("id")));
+					sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
+				}
+
+			} else if (newSize > oldSize) {
+
+				for (int i = 0; i < newSize; i++) {
+					Map<String, Object> data = newList.get(i);
+					
+					data.put("resume_id", resume_id);
+					if (i < oldSize) {
+						// update
+						data.put("id", Util.objectToString(oldList.get(i).get("id")));
+						sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
+					} else if (i >= oldSize) {
+						// insert
+						data.put("id", UUID.randomUUID().toString());
+						sqlSession.insert(NAMESPACE + "insert"+queryTag+"Info", data);
+					}
+				}
+
+			} else if (newSize < oldSize) {
+
+				for (int i = 0; i < oldSize; i++) {
+					
+					Map<String, Object> data = newList.get(i);
+					data.put("resume_id", resume_id);
+					if (i < newSize) {
+						// update
+						data.put("id", Util.objectToString(oldList.get(i).get("id")));
+						sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
+					} else if (i >= newSize) {
+						data = oldList.get(i);
+						// delete
+						sqlSession.delete(NAMESPACE + "delete"+queryTag+"Info", data);
+					}
+				}
+			}
+		} else if (newSize == 0 && oldSize > 0) {
+			for (int i = 0; i < oldSize; i++) {
+				Map<String, Object> data = oldList.get(i);
+				sqlSession.delete(NAMESPACE + "delete"+queryTag+"List", data);
+			}
+		} else if (newSize > 0 && oldSize == 0) {
+			for (int i = 0; i < newSize; i++) {
+				Map<String, Object> data = newList.get(i);
+				String newId = UUID.randomUUID().toString();
+				data.put("id", newId);
+				data.put("resume_id", resume_id);
+				sqlSession.insert(NAMESPACE + "insert"+queryTag+"Info", data);
+			}
+		} 
     }
 
 }
