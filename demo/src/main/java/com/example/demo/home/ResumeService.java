@@ -53,11 +53,52 @@ public class ResumeService {
 		return sqlSession.selectList(NAMESPACE + "getResumeListByUser", loginInfo);
 	}
 
+	public Map<String, Object> getBasicInfo(Map<String, Object> resumeInfo) {
+		// 기본정보
+		Map<String, Object> basicInfo = sqlSession.selectOne(NAMESPACE + "getBasicInfo", resumeInfo);
+		basicInfo = Util.convertKeysToLowerCase(basicInfo);
+		return basicInfo;
+	}
+
+	public List<Map<String, Object>> getCareerList(Map<String, Object> resumeInfo) {
+		// 경력정보 
+		List<Map<String, Object>> careerList = sqlSession.selectList(NAMESPACE + "getCareerList", resumeInfo);
+		careerList = Util.convertKeysToLowerCaseList(careerList);
+		return careerList;
+	}
+
+	public List<Map<String, Object>> getAcademicList(Map<String, Object> resumeInfo) {
+		// 학력 정보
+		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
+		academicList = Util.convertKeysToLowerCaseList(academicList);
+		return academicList;
+	}
+
+	public List<Map<String, Object>> getCertificateList(Map<String, Object> resumeInfo) {
+		// 자격증 정보
+		List<Map<String, Object>> certificateList = sqlSession.selectList(NAMESPACE + "getCertificateList", resumeInfo);
+		certificateList = Util.convertKeysToLowerCaseList(certificateList);
+		return certificateList;
+	}
+
+	public List<Map<String, Object>> getPortfolioList(Map<String, Object> resumeInfo) {
+		// 포트폴리오 정보
+		List<Map<String, Object>> portfolioList = sqlSession.selectList(NAMESPACE + "getPortfolioList", resumeInfo);
+		portfolioList = Util.convertKeysToLowerCaseList(portfolioList);
+		return portfolioList;
+	}
+
+	public List<Map<String, Object>> getSkillsList(Map<String, Object> resumeInfo) {
+		// 보유기술 정보
+		List<Map<String, Object>> skillsList = sqlSession.selectList(NAMESPACE + "getSkillsList", resumeInfo);
+		skillsList = Util.convertKeysToLowerCaseList(skillsList);
+		return skillsList;
+	}
+
 
 	// 화면에 이력서 정보를 뿌림.
 	public Map<String, Object> getResumeInfo(Map<String, Object> resumeInfo) {
 		Map<String, Object> result = new HashMap<>();
-
 
 		// 기본정보
 		Map<String, Object> basicInfo = sqlSession.selectOne(NAMESPACE + "getBasicInfo", resumeInfo);
@@ -143,11 +184,9 @@ public class ResumeService {
 		int oldCareerSize = old_careerList.size();
 		int oldAcademicSize = old_academicList.size();
 
-
-
-
 		// 기본정보
 		sqlSession.update(NAMESPACE + "updateBasicInfo", basicInfo);
+
 		// 경력정보
 		if (newCareerSize == oldCareerSize) {
 
@@ -192,7 +231,6 @@ public class ResumeService {
 
 		}
 		
-
 		// 학력정보
 		if (newAcademicSize == oldAcademicSize) {
 
