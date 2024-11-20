@@ -27,6 +27,9 @@ public class ResumeService {
 	@Autowired
 	SqlSession sqlSession;
 	
+	@Autowired
+	ListService listService;
+	
 	private static final String NAMESPACE = "resume.";
 
 
@@ -58,41 +61,6 @@ public class ResumeService {
 		Map<String, Object> basicInfo = sqlSession.selectOne(NAMESPACE + "getBasicInfo", resumeInfo);
 		basicInfo = Util.convertKeysToLowerCase(basicInfo);
 		return basicInfo;
-	}
-
-	public List<Map<String, Object>> getCareerList(Map<String, Object> resumeInfo) {
-		// 경력정보 
-		List<Map<String, Object>> careerList = sqlSession.selectList(NAMESPACE + "getCareerList", resumeInfo);
-		careerList = Util.convertKeysToLowerCaseList(careerList);
-		return careerList;
-	}
-
-	public List<Map<String, Object>> getAcademicList(Map<String, Object> resumeInfo) {
-		// 학력 정보
-		List<Map<String, Object>> academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", resumeInfo);
-		academicList = Util.convertKeysToLowerCaseList(academicList);
-		return academicList;
-	}
-
-	public List<Map<String, Object>> getCertificateList(Map<String, Object> resumeInfo) {
-		// 자격증 정보
-		List<Map<String, Object>> certificateList = sqlSession.selectList(NAMESPACE + "getCertificateList", resumeInfo);
-		certificateList = Util.convertKeysToLowerCaseList(certificateList);
-		return certificateList;
-	}
-
-	public List<Map<String, Object>> getPortfolioList(Map<String, Object> resumeInfo) {
-		// 포트폴리오 정보
-		List<Map<String, Object>> portfolioList = sqlSession.selectList(NAMESPACE + "getPortfolioList", resumeInfo);
-		portfolioList = Util.convertKeysToLowerCaseList(portfolioList);
-		return portfolioList;
-	}
-
-	public List<Map<String, Object>> getSkillsList(Map<String, Object> resumeInfo) {
-		// 보유기술 정보
-		List<Map<String, Object>> skillsList = sqlSession.selectList(NAMESPACE + "getSkillsList", resumeInfo);
-		skillsList = Util.convertKeysToLowerCaseList(skillsList);
-		return skillsList;
 	}
 
 
@@ -135,46 +103,6 @@ public class ResumeService {
 		basicInfo.put("usr_id", usr_id);
 		sqlSession.insert(NAMESPACE + "insertBasicInfo", basicInfo);
 		session.setAttribute("resume_id_new", id);
-	}
-
-	public void inputCareerList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("careerList");
-		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		String queryString = "Career";
-
-		Util.insertListMapResume(newList, resume_id, queryString);
-	}
-
-	public void inputAcademicList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("academicList");
-		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		String queryString = "Academic";
-
-		Util.insertListMapResume(newList, resume_id, queryString);
-	}
-
-	public void inputCertificateList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("certificateList");
-		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		String queryString = "Certificate";
-
-		Util.insertListMapResume(newList, resume_id, queryString);
-	}
-
-	public void inputPortfolioList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("portfolioList");
-		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		String queryString = "Portfolio";
-
-		Util.insertListMapResume(newList, resume_id, queryString);
-	}
-
-	public void inputSkillsList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("skillsList");
-		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		String queryString = "Skills";
-
-		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	// 이력서 정보 신규 등록.
@@ -221,54 +149,6 @@ public class ResumeService {
 		sqlSession.update(NAMESPACE + "updateBasicInfo", basicInfo);
 	}
 
-	public void updateCareerList(Map<String, Object> updateParams) {
-		List<Map<String, Object>> careerList = (List<Map<String, Object>>) updateParams.get("careerList");
-		List<Map<String, Object>> old_careerList = sqlSession.selectList(NAMESPACE + "getCareerList", updateParams);
-		String resume_id = (String) updateParams.get("id");
-		String queryTag = "Career";
-
-		Util.updateListMapResume(careerList, old_careerList, queryTag, resume_id);
-	}
-
-
-	public void updateAcademicList(Map<String, Object> updateParams) {
-		List<Map<String, Object>> academicList = (List<Map<String, Object>>) updateParams.get("academicList");
-		List<Map<String, Object>> old_academicList = sqlSession.selectList(NAMESPACE + "getAcademicList", updateParams);
-		String resume_id = (String) updateParams.get("id");
-		String queryTag = "Academic";
-
-		Util.updateListMapResume(academicList, old_academicList, queryTag, resume_id);
-	}
-
-
-	public void updateCertificateList(Map<String, Object> updateParams) {
-		List<Map<String, Object>> certificateList = (List<Map<String, Object>>) updateParams.get("certificateList");
-		List<Map<String, Object>> old_certificateList = sqlSession.selectList(NAMESPACE + "getCertificateList", updateParams);
-		String resume_id = (String) updateParams.get("id");
-		String queryTag = "Certificate";
-
-		Util.updateListMapResume(certificateList, old_certificateList, queryTag, resume_id);
-	}
-
-
-	public void updatePortfolioList(Map<String, Object> updateParams) {
-		List<Map<String, Object>> portfolioList = (List<Map<String, Object>>) updateParams.get("portfolioList");
-		List<Map<String, Object>> old_portfolioList = sqlSession.selectList(NAMESPACE + "getPortfolioList", updateParams);
-		String resume_id = (String) updateParams.get("id");
-		String queryTag = "Portfolio";
-
-		Util.updateListMapResume(portfolioList, old_portfolioList, queryTag, resume_id);
-	}
-
-
-	public void updateSkillsList(Map<String, Object> updateParams) {
-		List<Map<String, Object>> skillsList = (List<Map<String, Object>>) updateParams.get("skillsList");
-		List<Map<String, Object>> old_skillsList = sqlSession.selectList(NAMESPACE + "getSkillsList", updateParams);
-		String resume_id = (String) updateParams.get("id");
-		String queryTag = "Skills";
-
-		Util.updateListMapResume(skillsList, old_skillsList, queryTag, resume_id);
-	}
 
 
 

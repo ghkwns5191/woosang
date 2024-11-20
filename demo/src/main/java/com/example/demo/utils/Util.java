@@ -6,10 +6,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.servlet.http.HttpSession;
 
+@Transactional
 public class Util {
 
+	@Autowired
+	static
+	SqlSession sqlSession;
 
     /*
      * 1) StringUtil
@@ -336,87 +344,6 @@ public class Util {
             result = true;
         }
         return result;
-    }
-
-
-
-    public static void updateListMapResume(
-        List<Map<String, Object>> newList
-        , List<Map<String, Object>> oldList
-        , String queryTag
-        , String resume_id
-    ) {
-		int newSize = newList.size();
-		int oldSize = oldList.size();
-
-        if (newSize > 0 && oldSize > 0) {
-			// 경력정보
-			if (newSize == oldSize) {
-
-				for (int i = 0; i < newSize; i++) {
-					Map<String, Object> data = newList.get(i);
-					data.put("resume_id", resume_id);
-					data.put("id", Util.objectToString(oldList.get(i).get("id")));
-					sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
-				}
-
-			} else if (newSize > oldSize) {
-
-				for (int i = 0; i < newSize; i++) {
-					Map<String, Object> data = newList.get(i);
-					
-					data.put("resume_id", resume_id);
-					if (i < oldSize) {
-						// update
-						data.put("id", Util.objectToString(oldList.get(i).get("id")));
-						sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
-					} else if (i >= oldSize) {
-						// insert
-						data.put("id", UUID.randomUUID().toString());
-						sqlSession.insert(NAMESPACE + "insert"+queryTag+"Info", data);
-					}
-				}
-
-			} else if (newSize < oldSize) {
-
-				for (int i = 0; i < oldSize; i++) {
-					
-					Map<String, Object> data = newList.get(i);
-					data.put("resume_id", resume_id);
-					if (i < newSize) {
-						// update
-						data.put("id", Util.objectToString(oldList.get(i).get("id")));
-						sqlSession.update(NAMESPACE + "update"+queryTag+"Info", data);
-					} else if (i >= newSize) {
-						data = oldList.get(i);
-						// delete
-						sqlSession.delete(NAMESPACE + "delete"+queryTag+"Info", data);
-					}
-				}
-			}
-		} else if (newSize == 0 && oldSize > 0) {
-			for (int i = 0; i < oldSize; i++) {
-				Map<String, Object> data = oldList.get(i);
-				sqlSession.delete(NAMESPACE + "delete"+queryTag+"List", data);
-			}
-		} else if (newSize > 0 && oldSize == 0) {
-            insertListMapResume(newList, resume_id, queryTag);
-		} 
-    }
-
-
-
-    public static void insertListMapResume(
-        List<Map<String, Object>> newList
-        , String resume_id
-        , String queryString
-    ) {
-        for (Map<String, Object> data : newList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insert" + queryString + "Info", data);
-		}
     }
 
 }

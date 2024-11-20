@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,8 +22,8 @@ public class MailService {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom("발송 주소");
 		message.setTo("수신 주소");
-		message.setSubject();
-		message.setText();
+		message.setSubject("");
+		message.setText("");
 		mailSender.send(message);
 	}
 	// 단일 대상에 발송
