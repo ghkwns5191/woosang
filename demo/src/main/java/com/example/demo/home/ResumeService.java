@@ -138,68 +138,43 @@ public class ResumeService {
 	}
 
 	public void inputCareerList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> careerList = (List<Map<String, Object>>) inputParams.get("careerList");
-		careerList = Util.convertKeysToLowerCaseList(careerList);
+		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("careerList");
 		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		// 경력사항 저장
-		for (Map<String, Object> data : careerList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insertCareerInfo", data);
-		}
+		String queryString = "Career";
+
+		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	public void inputAcademicList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> academicList = (List<Map<String, Object>>) inputParams.get("academicList");
-		academicList = Util.convertKeysToLowerCaseList(academicList);
+		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("academicList");
 		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		// 경력사항 저장
-		for (Map<String, Object> data : academicList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insertAcademicInfo", data); 
-		}
+		String queryString = "Academic";
+
+		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	public void inputCertificateList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> certificateList = (List<Map<String, Object>>) inputParams.get("certificateList");
-		certificateList = Util.convertKeysToLowerCaseList(certificateList);
+		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("certificateList");
 		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		// 경력사항 저장
-		for (Map<String, Object> data : certificateList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insertCertificateInfo", data); 
-		}
+		String queryString = "Certificate";
+
+		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	public void inputPortfolioList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> portfolioList = (List<Map<String, Object>>) inputParams.get("portfolioList");
-		portfolioList = Util.convertKeysToLowerCaseList(portfolioList);
+		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("portfolioList");
 		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		// 경력사항 저장
-		for (Map<String, Object> data : portfolioList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insertPortfolioInfo", data); 
-		}
+		String queryString = "Portfolio";
+
+		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	public void inputSkillsList(Map<String, Object> inputParams, HttpServletRequest request) {
-		List<Map<String, Object>> skillsList = (List<Map<String, Object>>) inputParams.get("skillsList");
-		skillsList = Util.convertKeysToLowerCaseList(skillsList);
+		List<Map<String, Object>> newList = (List<Map<String, Object>>) inputParams.get("skillsList");
 		String resume_id = Util.objectToString(session.getAttribute("resume_id_new"));
-		// 경력사항 저장
-		for (Map<String, Object> data : skillsList) {
-			String id = UUID.randomUUID().toString();
-			data.put("resume_id", resume_id);
-			data.put("id", id);
-			sqlSession.insert(NAMESPACE + "insertSkillsInfo", data); 
-		}
+		String queryString = "Skills";
+
+		Util.insertListMapResume(newList, resume_id, queryString);
 	}
 
 	// 이력서 정보 신규 등록.
@@ -252,7 +227,7 @@ public class ResumeService {
 		String resume_id = (String) updateParams.get("id");
 		String queryTag = "Career";
 
-		Util.updateListMapResume(careerList, old_careerList, queryTag);
+		Util.updateListMapResume(careerList, old_careerList, queryTag, resume_id);
 	}
 
 
@@ -262,7 +237,7 @@ public class ResumeService {
 		String resume_id = (String) updateParams.get("id");
 		String queryTag = "Academic";
 
-		Util.updateListMapResume(academicList, old_academicList, queryTag);
+		Util.updateListMapResume(academicList, old_academicList, queryTag, resume_id);
 	}
 
 
@@ -272,7 +247,7 @@ public class ResumeService {
 		String resume_id = (String) updateParams.get("id");
 		String queryTag = "Certificate";
 
-		Util.updateListMapResume(certificateList, old_certificateList, queryTag);
+		Util.updateListMapResume(certificateList, old_certificateList, queryTag, resume_id);
 	}
 
 
@@ -282,7 +257,7 @@ public class ResumeService {
 		String resume_id = (String) updateParams.get("id");
 		String queryTag = "Portfolio";
 
-		Util.updateListMapResume(portfolioList, old_portfolioList, queryTag);
+		Util.updateListMapResume(portfolioList, old_portfolioList, queryTag, resume_id);
 	}
 
 
@@ -292,7 +267,7 @@ public class ResumeService {
 		String resume_id = (String) updateParams.get("id");
 		String queryTag = "Skills";
 
-		Util.updateListMapResume(skillsList, old_skillsList, queryTag);
+		Util.updateListMapResume(skillsList, old_skillsList, queryTag, resume_id);
 	}
 
 

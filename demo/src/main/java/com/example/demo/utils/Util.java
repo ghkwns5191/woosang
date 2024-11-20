@@ -344,6 +344,7 @@ public class Util {
         List<Map<String, Object>> newList
         , List<Map<String, Object>> oldList
         , String queryTag
+        , String resume_id
     ) {
 		int newSize = newList.size();
 		int oldSize = oldList.size();
@@ -399,14 +400,23 @@ public class Util {
 				sqlSession.delete(NAMESPACE + "delete"+queryTag+"List", data);
 			}
 		} else if (newSize > 0 && oldSize == 0) {
-			for (int i = 0; i < newSize; i++) {
-				Map<String, Object> data = newList.get(i);
-				String newId = UUID.randomUUID().toString();
-				data.put("id", newId);
-				data.put("resume_id", resume_id);
-				sqlSession.insert(NAMESPACE + "insert"+queryTag+"Info", data);
-			}
+            insertListMapResume(newList, resume_id, queryTag);
 		} 
+    }
+
+
+
+    public static void insertListMapResume(
+        List<Map<String, Object>> newList
+        , String resume_id
+        , String queryString
+    ) {
+        for (Map<String, Object> data : newList) {
+			String id = UUID.randomUUID().toString();
+			data.put("resume_id", resume_id);
+			data.put("id", id);
+			sqlSession.insert(NAMESPACE + "insert" + queryString + "Info", data);
+		}
     }
 
 }
